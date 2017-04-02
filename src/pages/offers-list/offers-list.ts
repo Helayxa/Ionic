@@ -15,19 +15,12 @@ export class OffersListPage {
   offersList: any[];
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private jsonService: JsonService) {
-
+    this.offersList = [];
   }
 
   /* Récupère la liste des offres à l'initialisation du composant */
-  ionViewDidLoad() {
+  ionViewWillEnter() {
     this.offersList = this.jsonService.getOffersList();
-  }
-
-  onSwipe(swipe: any): void {
-    // Renvoie à la tab de gauche
-    if(swipe.direction === 4) {
-      this.navCtrl.parent.select(0);
-    }
   }
 
   goToFormForOffer(offerId: number): void {

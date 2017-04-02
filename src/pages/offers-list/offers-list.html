@@ -7,14 +7,20 @@
 </ion-header>
 
 
-<ion-content padding (swipe)="onSwipe($event)">
+<ion-content padding>
 
-  <ion-list inset>
-  <button ion-item *ngFor="let offer of offersList; let id = index" (click)="goToFormForOffer(id)">
-    <h2>{{offer?.title}}</h2>
-    <h3>{{offer?.description}}</h3>
-    <h3 clear item-right>{{offer?.price}} €</h3>
-  </button>
-</ion-list>
+  <ion-card *ngFor="let offer of offersList; let id = index">
+    <ion-card-content>
+      <ion-card-title>
+        {{offer?.title}}
+      </ion-card-title>
+      {{offer?.description}}
+      <ion-row>
+        <ion-col center text-center>
+          <button ion-button (click)="goToFormForOffer(id)">S'inscrire pour {{offer?.price}} €</button>
+        </ion-col>
+      </ion-row>
+    </ion-card-content>
+  </ion-card>
 
 </ion-content>

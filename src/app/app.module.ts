@@ -15,6 +15,8 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 
 import { JsonService } from '../providers/json-service';
 
+import { SuperTabsModule } from 'ionic2-super-tabs';
+
 @NgModule({
   declarations: [
     MyApp,
@@ -28,6 +30,7 @@ import { JsonService } from '../providers/json-service';
     AdministratorPage
   ],
   imports: [
+    SuperTabsModule,
     IonicModule.forRoot(MyApp)
   ],
   bootstrap: [IonicApp],

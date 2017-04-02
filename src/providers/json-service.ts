@@ -25,6 +25,10 @@ export class JsonService {
       .catch((error: any) => Observable.throw(error.json() || 'Server error'));
   }
 
+  getServiceData(): any {
+    return this.serviceData;
+  }
+
   getOffersList(): any[] {
     if(this.serviceData && this.serviceData.offers) {
       this.offersList = this.serviceData.offers;
