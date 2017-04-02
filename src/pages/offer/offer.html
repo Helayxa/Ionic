@@ -1,0 +1,18 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Offre</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+  <div *ngFor="let field of fields">
+      {{field?.fieldId}}
+      {{field?.fieldType}}
+      {{field?.input}}
+      {{field?.label}}
+  </div>
+
+</ion-content>

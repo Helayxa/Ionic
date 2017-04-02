@@ -1,0 +1,15 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Service</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding (swipe)="onSwipe($event)">
+  <div (swipe)="onSwipe($event)">
+  {{service?.title}} <br/><br/>
+  {{service?.description}} <br/><br/>
+  </div>
+</ion-content>

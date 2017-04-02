@@ -1,0 +1,20 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Liste des offres</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding (swipe)="onSwipe($event)">
+
+  <ion-list inset>
+  <button ion-item *ngFor="let offer of offersList; let id = index" (click)="goToFormForOffer(id)">
+    <h2>{{offer?.title}}</h2>
+    <h3>{{offer?.description}}</h3>
+    <h3 clear item-right>{{offer?.price}} €</h3>
+  </button>
+</ion-list>
+
+</ion-content>
