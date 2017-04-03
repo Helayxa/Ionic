@@ -2,7 +2,7 @@ import { NgModule, ErrorHandler } from '@angular/core';
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { MyApp } from './app.component';
 import { TabsPage } from '../pages/tabs/tabs';
-import { OfferPage } from '../pages/offer/offer';
+import { OfferFormPage } from '../pages/offer-form/offer-form';
 import { OffersListPage } from '../pages/offers-list/offers-list';
 import { ServicePage } from '../pages/service/service';
 import { AdministratorPage } from '../pages/administrator/administrator';
@@ -20,7 +20,7 @@ import { SuperTabsModule } from 'ionic2-super-tabs';
   declarations: [
     MyApp,
     TabsPage,
-    OfferPage,
+    OfferFormPage,
     OffersListPage,
     ServicePage,
     AdministratorPage
@@ -32,7 +32,7 @@ import { SuperTabsModule } from 'ionic2-super-tabs';
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
-    OfferPage,
+    OfferFormPage,
     OffersListPage,
     ServicePage,
     AdministratorPage,

@@ -44,14 +44,14 @@ export class JsonService {
       for(let field of this.serviceData.commonFields) {
         fields.push(field);
       }
-      if(this.offersList && this.offersList[offerId]) {
+      /*if(this.offersList && this.offersList[offerId]) {
         let offer: any = this.offersList[offerId];
         if(offer.specificFields) {
           for(let field of offer.specificFields) {
             fields.push(field);
           }
         }
-      }
+      }*/
     }
     return fields;
   }
