@@ -1,5 +1,11 @@
-<super-tabs height="100%">
+<!-- <super-tabs height="100%">
   <super-tab [tabRoot]="serviceTab" title="Service" ></super-tab>
   <super-tab [tabRoot]="offersListTab" title="Liste des offres"></super-tab>
   <super-tab [tabRoot]="administratorTab" title="Administrateur"></super-tab>
-</super-tabs>
+</super-tabs> -->
+
+<ion-tabs>
+  <ion-tab [root]="serviceTab" tabTitle="SERVICE" ></ion-tab>
+  <ion-tab [root]="offersListTab" tabTitle="LISTE DES OFFRES"></ion-tab>
+  <ion-tab [root]="administratorTab" tabTitle="ADMINISTRATEUR"></ion-tab>
+</ion-tabs>

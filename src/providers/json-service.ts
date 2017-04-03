@@ -8,7 +8,7 @@ import 'rxjs/add/operator/catch';
 @Injectable()
 export class JsonService {
 
-  private filePath: string = "service.json";
+  private filePath: string = "Canal.json";
   private serviceData: any;
   private offersList: any[];
 
