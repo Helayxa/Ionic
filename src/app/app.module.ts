@@ -11,6 +11,8 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
 import { JsonService } from '../providers/json-service';
+import { DatabaseService } from '../providers/database-service';
+import { FileService } from '../providers/file-service';
 
 import { SuperTabsModule } from 'ionic2-super-tabs';
 
@@ -40,6 +42,8 @@ import { SuperTabsModule } from 'ionic2-super-tabs';
     StatusBar,
     SplashScreen,
     JsonService,
+    DatabaseService,
+    FileService,
     {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]
 })
