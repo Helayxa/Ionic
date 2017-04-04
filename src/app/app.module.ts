@@ -6,6 +6,7 @@ import { OfferFormPage } from '../pages/offer-form/offer-form';
 import { OffersListPage } from '../pages/offers-list/offers-list';
 import { ServicePage } from '../pages/service/service';
 import { AdministratorPage } from '../pages/administrator/administrator';
+import { DatabasePage } from '../pages/database/database';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -23,7 +24,8 @@ import { SuperTabsModule } from 'ionic2-super-tabs';
     OfferFormPage,
     OffersListPage,
     ServicePage,
-    AdministratorPage
+    AdministratorPage,
+    DatabasePage
   ],
   imports: [
     SuperTabsModule,
@@ -36,7 +38,8 @@ import { SuperTabsModule } from 'ionic2-super-tabs';
     OffersListPage,
     ServicePage,
     AdministratorPage,
-    TabsPage
+    TabsPage,
+    DatabasePage
   ],
   providers: [
     StatusBar,

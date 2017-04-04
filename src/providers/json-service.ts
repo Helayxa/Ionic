@@ -29,6 +29,10 @@ export class JsonService {
     return this.serviceData;
   }
 
+  getServiceTitle(): any {
+    return this.serviceData.title;
+  }
+
   getOffersList(): any[] {
     if(this.serviceData && this.serviceData.offers) {
       this.offersList = this.serviceData.offers;
@@ -54,6 +58,36 @@ export class JsonService {
       }*/
     }
     return fields;
+  }
+
+  getCommonFieldsIds(): Array<string> {
+    var commonFieldsIds = new Array();
+    if(this.serviceData) {
+      for(let field of this.serviceData.commonFields) {
+        commonFieldsIds.push(field.fieldId);
+      }
+    }
+    return commonFieldsIds;
+  }
+
+  getSpecificFieldsIdsByOffer(offerId: number): Array<string> {
+    var specificFieldsIds = new Array();
+    var offers = this.getOffersList();
+    if(offers && offers[offerId] && offers[offerId].specificFields) {
+      for(let field of offers[offerId].specificFields) {
+        specificFieldsIds.push(field.fieldId);
+      }
+    }
+    return specificFieldsIds;
+  }
+
+  getAllSpecificFieldsIds() : Array<Array<string>> {
+    var specificFieldsIds = new Array();
+    var size = this.getOffersList().length;
+    for(let i=0; i<size; i++) {
+      specificFieldsIds.push(this.getSpecificFieldsIdsByOffer(i));
+    }
+    return specificFieldsIds;
   }
 
 }
