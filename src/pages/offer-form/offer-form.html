@@ -1,0 +1,92 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Inscription</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+  <form [formGroup]="offerForm" (ngSubmit)="submitForm()">
+    <div *ngFor="let field of fields">
+      <div [ngSwitch]="field?.input">
+        <div *ngSwitchCase="'text'">
+          <ion-item>
+            <ion-label color="primary" stacked>{{field?.label}} <span *ngIf="field.required">*</span></ion-label>
+            <ion-input [placeholder]="field.params?.placeholder" [formControlName]="field?.fieldId"></ion-input>
+          </ion-item>
+          <div class="error-message">{{getErrorMessage(offerForm.controls[field?.fieldId]?.errors)}}</div>
+        </div>
+
+        <div *ngSwitchCase="'number'">
+          <ion-item>
+            <ion-label color="primary" stacked>{{field?.label}} <span *ngIf="field.required">*</span></ion-label>
+            <ion-input type="number" [formControlName]="field?.fieldId"></ion-input>
+          </ion-item>
+          <div class="error-message">{{getErrorMessage(offerForm.controls[field?.fieldId]?.errors)}}</div>
+        </div>
+
+        <div *ngSwitchCase="'date'">
+          <ion-item>
+            <ion-label color="primary" stacked>{{field?.label}} <span *ngIf="field.required">*</span></ion-label>
+            <ion-datetime
+            displayFormat="DD/MM/YYYY"
+            pickerFormat="DD/MMMM/YYYY"
+            cancelText="Annuler"
+            doneText="Valider"
+            [placeholder]="field.params?.placeholder"
+            [monthNames]="frenchMonth"
+            [min]="field?.params?.minDate"
+            [max]="field?.params?.maxDate"
+            [formControlName]="field?.fieldId">
+            </ion-datetime>
+          </ion-item>
+          <div class="error-message">{{getErrorMessage(offerForm.controls[field?.fieldId]?.errors)}}</div>
+        </div>
+
+        <div *ngSwitchCase="'radio'">
+          <ion-list radio-group [formControlName]="field?.fieldId">
+            <ion-list-header>
+              <ion-label color="primary">{{field?.label}} <span *ngIf="field.required">*</span></ion-label>
+            </ion-list-header>
+            <ion-item *ngFor='let choice of field?.params?.choices'>
+              <ion-label>{{choice?.label}}</ion-label>
+              <ion-radio [value]="choice?.value" [checked]="choice?.selected"></ion-radio>
+            </ion-item>
+          </ion-list>
+          <div class="error-message">{{getErrorMessage(offerForm.controls[field?.fieldId]?.errors)}}</div>
+        </div>
+
+        <div *ngSwitchCase="'select'">
+          <ion-item>
+            <ion-label color="primary">{{field?.label}} <span *ngIf="field.required">*</span></ion-label>
+            <ion-select
+            cancelText="Annuler"
+            okText = "Valider"
+            [placeholder]="field.params?.placeholder"
+            [formControlName]="field?.fieldId">
+              <ion-option *ngFor='let choice of field?.params?.choices' [value]="choice?.value" [selected]="choice?.selected">{{choice?.label}}</ion-option>
+            </ion-select>
+          </ion-item>
+          <div class="error-message">{{getErrorMessage(offerForm.controls[field?.fieldId]?.errors)}}</div>
+        </div>
+
+        <div *ngSwitchCase="'check'">
+          <ion-item>
+            <ion-label color="primary">{{field?.label}} <span *ngIf="field.required">*</span></ion-label>
+            <ion-checkbox [formControlName]="field?.fieldId"></ion-checkbox>
+          </ion-item>
+          <div class="error-message">{{getErrorMessage(offerForm.controls[field?.fieldId]?.errors)}}</div>
+        </div>
+
+      </div>
+    </div>
+    <ion-row>
+      <ion-col center text-center>
+        <button ion-button type="submit" [disabled]="!offerForm.valid">S'inscrire</button>
+      </ion-col>
+    </ion-row>
+  </form>
+
+</ion-content>

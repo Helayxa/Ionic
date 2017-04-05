@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 
-import { OfferPage } from '../offer/offer';
+import { OfferFormPage } from '../offer-form/offer-form';
 
 import { JsonService } from '../../providers/json-service';
 
@@ -24,7 +24,7 @@ export class OffersListPage {
   }
 
   goToFormForOffer(offerId: number): void {
-    this.navCtrl.push(OfferPage, this.jsonService.getFieldsByOffer(offerId));
+    this.navCtrl.push(OfferFormPage, this.jsonService.getFieldsByOffer(offerId));
   }
 
 }
