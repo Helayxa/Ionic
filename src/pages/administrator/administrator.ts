@@ -8,11 +8,15 @@ import { NavController, NavParams } from 'ionic-angular';
 export class AdministratorPage {
 
   constructor(public navCtrl: NavController, public navParams: NavParams) {
-    
+
   }
 
   ionViewDidLoad() {
-
+    this.barcodeScanner.scan().then((barcodeData) => {
+     // Success! Barcode data is here
+    }, (err) => {
+        // An error occurred
+    });
   }
 
 }
