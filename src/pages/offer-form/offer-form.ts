@@ -23,7 +23,7 @@ export class OfferFormPage {
     let formBuilderContent: any = {};
     for(let field of this.fields) {
       let validators: any = this.generateValidatorsForField(field);
-      let defaultValue: any = field.input === 'check' ? false : null;
+      let defaultValue: any = null;
       formBuilderContent[field.fieldId] = validators.length > 1 ? [defaultValue, Validators.compose(validators)] : [defaultValue, validators];
     }
     this.offerForm = this.formBuilder.group(formBuilderContent);
@@ -63,6 +63,7 @@ export class OfferFormPage {
   }
 
   submitForm(): void {
+    console.log(this.offerForm);
     console.log(this.offerForm.value);
   }
 

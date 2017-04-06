@@ -28,13 +28,34 @@ export class MultipleCheckboxComponent implements ControlValueAccessor, OnInit {
   }
 
   ngOnInit(): void {
-
+    for(let choice of this.field.params.choices) {
+      if(choice.selected) {
+        this.checkboxValues[choice.value] = true;
+      }
+    }
   }
 
   changeValue(event: any, id: number) {
-    console.log(event.checked);
-    console.log(id);
-    this.onChange(event.checked);
+    let choice: any = this.field.params.choices[id];
+    this.checkboxValues[choice.value] = event.checked;
+    console.log(this.checkboxValues);
+    let valueToEmit: any = this.constructValueToEmit();
+    console.log(valueToEmit);
+    this.onChange(valueToEmit);
+  }
+
+  constructValueToEmit(): any{
+    let valueToReturn: any[] = [];
+    for(let key in this.checkboxValues) {
+      if(this.checkboxValues[key] === true) {
+        valueToReturn.push(key);
+      }
+    }
+    if(valueToReturn.length > 0) {
+      return valueToReturn.toString();
+    } else {
+      return null;
+    }
   }
 
   writeValue(value) {
