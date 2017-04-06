@@ -63,7 +63,7 @@ export class OfferFormPage {
   }
 
   submitForm(): void {
-    console.log(this.offerForm);
+    console.log(this.offerForm.value);
   }
 
 }

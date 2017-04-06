@@ -73,10 +73,7 @@
         </div>
 
         <div *ngSwitchCase="'check'">
-          <ion-item>
-            <ion-label color="primary">{{field?.label}} <span *ngIf="field.required">*</span></ion-label>
-            <ion-checkbox [formControlName]="field?.fieldId"></ion-checkbox>
-          </ion-item>
+          <multiple-checkbox [field]="field" [formControlName]="field?.fieldId"></multiple-checkbox>
           <div class="error-message">{{getErrorMessage(offerForm.controls[field?.fieldId]?.errors)}}</div>
         </div>
 
