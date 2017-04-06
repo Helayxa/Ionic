@@ -1,4 +1,4 @@
-import { Component, forwardRef, Input, OnInit } from '@angular/core';
+import { Component, forwardRef, Input, AfterViewInit } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 
@@ -14,7 +14,7 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
   ]
 })
 
-export class MultipleCheckboxComponent implements ControlValueAccessor, OnInit {
+export class MultipleCheckboxComponent implements ControlValueAccessor, AfterViewInit {
 
   @Input('field') field: any;
 
@@ -27,20 +27,21 @@ export class MultipleCheckboxComponent implements ControlValueAccessor, OnInit {
     this.checkboxValues = [];
   }
 
-  ngOnInit(): void {
-    for(let choice of this.field.params.choices) {
-      if(choice.selected) {
-        this.checkboxValues[choice.value] = true;
+  ngAfterViewInit() {
+    let choices: any = this.field.params.choices;
+    if(choices) {
+      for(let i = 0; i < choices.length; i++ ) {
+        if(choices[i].selected) {
+          this.changeValue(true, i);
+        }
       }
     }
   }
 
   changeValue(event: any, id: number) {
     let choice: any = this.field.params.choices[id];
-    this.checkboxValues[choice.value] = event.checked;
-    console.log(this.checkboxValues);
+    this.checkboxValues[choice.value] = event;
     let valueToEmit: any = this.constructValueToEmit();
-    console.log(valueToEmit);
     this.onChange(valueToEmit);
   }
 
