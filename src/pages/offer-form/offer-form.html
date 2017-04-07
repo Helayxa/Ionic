@@ -11,23 +11,23 @@
   <form [formGroup]="offerForm" (ngSubmit)="submitForm()">
     <div *ngFor="let field of fields">
       <div [ngSwitch]="field?.input">
-        <div *ngSwitchCase="'text'">
+        <div *ngSwitchCase="'text'" [formGroupName]="field.formGroupName">
           <ion-item>
             <ion-label color="primary" stacked>{{field?.label}} <span *ngIf="field.required">*</span></ion-label>
             <ion-input [placeholder]="field.params?.placeholder" [formControlName]="field?.fieldId"></ion-input>
           </ion-item>
-          <div class="error-message">{{getErrorMessage(offerForm.controls[field?.fieldId]?.errors)}}</div>
+          <div class="error-message">{{getErrorMessage(offerForm.controls[field.formGroupName]?.controls[field?.fieldId]?.errors)}}</div>
         </div>
 
-        <div *ngSwitchCase="'number'">
+        <div *ngSwitchCase="'number'" [formGroupName]="field.formGroupName">
           <ion-item>
             <ion-label color="primary" stacked>{{field?.label}} <span *ngIf="field.required">*</span></ion-label>
             <ion-input type="number" [formControlName]="field?.fieldId"></ion-input>
           </ion-item>
-          <div class="error-message">{{getErrorMessage(offerForm.controls[field?.fieldId]?.errors)}}</div>
+          <div class="error-message">{{getErrorMessage(offerForm.controls[field.formGroupName]?.controls[field?.fieldId]?.errors)}}</div>
         </div>
 
-        <div *ngSwitchCase="'date'">
+        <div *ngSwitchCase="'date'" [formGroupName]="field.formGroupName">
           <ion-item>
             <ion-label color="primary" stacked>{{field?.label}} <span *ngIf="field.required">*</span></ion-label>
             <ion-datetime
@@ -42,10 +42,10 @@
             [formControlName]="field?.fieldId">
             </ion-datetime>
           </ion-item>
-          <div class="error-message">{{getErrorMessage(offerForm.controls[field?.fieldId]?.errors)}}</div>
+          <div class="error-message">{{getErrorMessage(offerForm.controls[field.formGroupName]?.controls[field?.fieldId]?.errors)}}</div>
         </div>
 
-        <div *ngSwitchCase="'radio'">
+        <div *ngSwitchCase="'radio'" [formGroupName]="field.formGroupName">
           <ion-list radio-group [formControlName]="field?.fieldId">
             <ion-list-header>
               <ion-label color="primary">{{field?.label}} <span *ngIf="field.required">*</span></ion-label>
@@ -55,10 +55,10 @@
               <ion-radio [value]="choice?.value" [checked]="choice?.selected"></ion-radio>
             </ion-item>
           </ion-list>
-          <div class="error-message">{{getErrorMessage(offerForm.controls[field?.fieldId]?.errors)}}</div>
+          <div class="error-message">{{getErrorMessage(offerForm.controls[field.formGroupName]?.controls[field?.fieldId]?.errors)}}</div>
         </div>
 
-        <div *ngSwitchCase="'select'">
+        <div *ngSwitchCase="'select'" [formGroupName]="field.formGroupName">
           <ion-item>
             <ion-label color="primary">{{field?.label}} <span *ngIf="field.required">*</span></ion-label>
             <ion-select
@@ -69,12 +69,12 @@
               <ion-option *ngFor='let choice of field?.params?.choices' [value]="choice?.value" [selected]="choice?.selected">{{choice?.label}}</ion-option>
             </ion-select>
           </ion-item>
-          <div class="error-message">{{getErrorMessage(offerForm.controls[field?.fieldId]?.errors)}}</div>
+          <div class="error-message">{{getErrorMessage(offerForm.controls[field.formGroupName]?.controls[field?.fieldId]?.errors)}}</div>
         </div>
 
-        <div *ngSwitchCase="'check'">
+        <div *ngSwitchCase="'check'" [formGroupName]="field.formGroupName">
           <multiple-checkbox [field]="field" [formControlName]="field?.fieldId"></multiple-checkbox>
-          <div class="error-message">{{getErrorMessage(offerForm.controls[field?.fieldId]?.errors)}}</div>
+          <div class="error-message">{{getErrorMessage(offerForm.controls[field.formGroupName]?.controls[field?.fieldId]?.errors)}}</div>
         </div>
 
       </div>

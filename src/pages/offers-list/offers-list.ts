@@ -24,7 +24,11 @@ export class OffersListPage {
   }
 
   goToFormForOffer(offerId: number): void {
-    this.navCtrl.push(OfferFormPage, this.jsonService.getFieldsByOffer(offerId));
+    this.navCtrl.push(OfferFormPage, {
+      id: offerId,
+      commonFields: this.jsonService.getCommonFieldsByOffer(offerId),
+      specificFields: this.jsonService.getSpecificFieldsByOffer(offerId)
+    });
   }
 
 }

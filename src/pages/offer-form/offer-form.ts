@@ -2,31 +2,66 @@ import { Component } from '@angular/core';
 import { Validators, FormBuilder, FormGroup } from '@angular/forms';
 import { NavController, NavParams } from 'ionic-angular';
 
+import { JsonService } from '../../providers/json-service';
+
 @Component({
   selector: 'page-offer-form',
   templateUrl: 'offer-form.html'
 })
 export class OfferFormPage {
 
+  private offerId: number;
+  private commonFields: any[];
+  private specificFields: any[];
   private fields: any[];
+  private FIELDS_NAME = {
+    COMMON: 'commonFields',
+    SPECIFIC: 'specificFields'
+  };
   private offerForm: FormGroup;
   private frenchMonth: any[];
   private errorMessages: any;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private formBuilder: FormBuilder) {
-    this.fields = this.navParams.data;
+  constructor(public navCtrl: NavController, public navParams: NavParams, private formBuilder: FormBuilder, private jsonService: JsonService) {
+    this.fields = [];
     this.frenchMonth = ['Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre'];
+    this.offerId = this.navParams.get('id');
+    this.commonFields = this.navParams.get('commonFields');
+    this.specificFields = this.navParams.get('specificFields');
+    this.constructFields();
     this.generateFormControls();
   }
 
-  generateFormControls(): void {
-    let formBuilderContent: any = {};
-    for(let field of this.fields) {
-      let validators: any = this.generateValidatorsForField(field);
-      let defaultValue: any = null;
-      formBuilderContent[field.fieldId] = validators.length > 1 ? [defaultValue, Validators.compose(validators)] : [defaultValue, validators];
+  constructFields(): void {
+    for(let field of this.commonFields) {
+      field.formGroupName = this.FIELDS_NAME.COMMON;
+      this.fields.push(field);
     }
-    this.offerForm = this.formBuilder.group(formBuilderContent);
+
+    for(let field of this.specificFields) {
+      field.formGroupName = this.FIELDS_NAME.SPECIFIC;
+      this.fields.push(field);
+    }
+  }
+
+  generateFormControls(): void {
+    let commonFieldsFormGroup: any = {};
+    let specificFieldsFormGroup: any = {}
+    let defaultValue: any = null;
+    for(let field of this.commonFields) {
+      let validators: any = this.generateValidatorsForField(field);
+      commonFieldsFormGroup[field.fieldId] = validators.length > 1 ? [defaultValue, Validators.compose(validators)] : [defaultValue, validators];
+    }
+
+    for(let field of this.specificFields) {
+      let validators: any = this.generateValidatorsForField(field);
+      specificFieldsFormGroup[field.fieldId] = validators.length > 1 ? [defaultValue, Validators.compose(validators)] : [defaultValue, validators];
+    }
+
+    this.offerForm = this.formBuilder.group({
+      commonFields: this.formBuilder.group(commonFieldsFormGroup),
+      specificFields: this.formBuilder.group(specificFieldsFormGroup)
+    });
   }
 
   generateValidatorsForField(field: any): any[] {
