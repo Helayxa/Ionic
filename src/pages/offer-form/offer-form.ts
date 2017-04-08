@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Validators, FormBuilder, FormGroup } from '@angular/forms';
 import { NavController, NavParams } from 'ionic-angular';
 
@@ -8,12 +8,13 @@ import { JsonService } from '../../providers/json-service';
   selector: 'page-offer-form',
   templateUrl: 'offer-form.html'
 })
-export class OfferFormPage {
+export class OfferFormPage implements OnInit {
 
   private offerId: number;
   private commonFields: any[];
   private specificFields: any[];
   private fields: any[];
+  private features: any[];
   private FIELDS_NAME = {
     COMMON: 'commonFields',
     SPECIFIC: 'specificFields'
@@ -24,10 +25,15 @@ export class OfferFormPage {
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private formBuilder: FormBuilder, private jsonService: JsonService) {
     this.fields = [];
+    this.features = [];
     this.frenchMonth = ['Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre'];
     this.offerId = this.navParams.get('id');
     this.commonFields = this.navParams.get('commonFields');
     this.specificFields = this.navParams.get('specificFields');
+  }
+
+  ngOnInit(): void {
+    this.features = this.jsonService.getFeaturesByOffer(this.offerId);
     this.constructFields();
     this.generateFormControls();
   }
@@ -100,6 +106,7 @@ export class OfferFormPage {
   submitForm(): void {
     console.log(this.offerForm);
     console.log(this.offerForm.value);
+    console.log(this.features);
   }
 
 }

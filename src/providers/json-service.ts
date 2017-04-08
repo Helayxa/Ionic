@@ -44,23 +44,8 @@ export class JsonService {
 
   getCommonFieldsByOffer(offerId: number): any[] {
     let fields: any[] = [];
-    if(this.serviceData) {
-      for(let field of this.serviceData.commonFields) {
-        fields.push(field);
-      }
-    }
-    return fields;
-  }
-
-  getSpecificFieldsByOffer(offerId: number): any[] {
-    let fields: any[] = [];
-    if(this.offersList && this.offersList[offerId]) {
-      let offer: any = this.offersList[offerId];
-      if(offer.specificFields) {
-        for(let field of offer.specificFields) {
-          fields.push(field);
-        }
-      }
+    if(this.serviceData && this.serviceData.commonFields) {
+      fields = this.serviceData.commonFields;
     }
     return fields;
   }
@@ -73,6 +58,17 @@ export class JsonService {
       }
     }
     return commonFieldsIds;
+  }
+
+  getSpecificFieldsByOffer(offerId: number): any[] {
+    let fields: any[] = [];
+    if(this.offersList && this.offersList[offerId]) {
+      let offer: any = this.offersList[offerId];
+      if(offer.specificFields) {
+        fields = offer.specificFields;
+      }
+    }
+    return fields;
   }
 
   getSpecificFieldsIdsByOffer(offerId: number): Array<string> {
@@ -93,6 +89,14 @@ export class JsonService {
       specificFieldsIds.push(this.getSpecificFieldsIdsByOffer(i));
     }
     return specificFieldsIds;
+  }
+
+  getFeaturesByOffer(offerId: number): any[] {
+    let features: any[] = []
+    if(this.offersList && this.offersList[offerId] && this.offersList[offerId].features) {
+      features = this.offersList[offerId].features;
+    }
+    return features;
   }
 
 }

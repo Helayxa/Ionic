@@ -45,7 +45,7 @@ export class MultipleCheckboxComponent implements ControlValueAccessor, AfterVie
     this.onChange(valueToEmit);
   }
 
-  constructValueToEmit(): any{
+  constructValueToEmit(): any {
     let valueToReturn: any[] = [];
     for(let key in this.checkboxValues) {
       if(this.checkboxValues[key] === true) {
