@@ -1,8 +1,17 @@
 page-offer-form {
 
   .error-message {
-    color: red;
     white-space: pre-wrap;
+    font-size: 0.8em;
+    color: red;
+  }
+
+  #features-header {
+    border-top: 0;
+  }
+
+  .error-message-container.item-md.item-block .item-inner {
+    border-bottom: 0;
   }
 
 }

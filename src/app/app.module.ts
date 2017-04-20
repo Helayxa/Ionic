@@ -17,6 +17,8 @@ import { FileService } from '../providers/file-service';
 
 import { SuperTabsModule } from 'ionic2-super-tabs';
 
+import { MultipleCheckboxComponent } from '../components/multiple-checkbox/multiple-checkbox';
+
 @NgModule({
   declarations: [
     MyApp,
@@ -25,7 +27,8 @@ import { SuperTabsModule } from 'ionic2-super-tabs';
     OffersListPage,
     ServicePage,
     AdministratorPage,
-    DatabasePage
+    DatabasePage,
+    MultipleCheckboxComponent
   ],
   imports: [
     SuperTabsModule,
