@@ -7,24 +7,26 @@
 
 <ion-content padding>
   <ion-grid>
-      <ion-row>
-          <ion-col *ngFor="let payment of paymentList">
-              <ion-item>
-                <ion-label>{{payment}}</ion-label>
-                <ion-checkbox ngModel="payment" name="payment"></ion-checkbox>
-              </ion-item>
-          </ion-col>
-      </ion-row>
+      <ion-list radio-group [(ngModel)]="radioPayment">
+        <ion-row>
+            <ion-col *ngFor="let payment of paymentList">
+                <ion-item>
+                  <ion-label>{{payment}}</ion-label>
+                  <ion-radio [value]="payment" (ionSelect)="onRadioChange(payment)"></ion-radio>
+                </ion-item>
+            </ion-col>
+          </ion-row>
+      </ion-list>
   </ion-grid>
     <ion-grid>
         <ion-row>
             <ion-col col-xs-12 col-md-4>
               <!-- AFFICHAGE CREDIT CARD  -->
-                <ion-card *ngIf="payment === 'creditCard'">
+                <ion-card *ngIf="radioPayment === 'creditCard'">
                   <ion-card-header class="header">
                     <ion-row>
                       <ion-col>
-                        <h2>Payment Details</h2>
+                        <h2>Détails du paiement</h2>
                       </ion-col>
                       <ion-col>
                         <img src="http://i76.imgup.net/accepted_c22e0.png">
@@ -36,7 +38,7 @@
                       <ion-row>
                           <ion-col col-12>
                               <ion-item>
-                                <ion-label color="dark" stacked>CARD NUMBER</ion-label>
+                                <ion-label color="dark" stacked>NUMERO DE CARTE</ion-label>
                                 <ion-input class="inputStyle"
                                           [(ngModel)] = "cardNumber"
                                           type="number"
@@ -53,7 +55,7 @@
                       <ion-row>
                           <ion-col col-12>
                               <ion-item>
-                                <ion-label color="dark" stacked>NAME</ion-label>
+                                <ion-label color="dark" stacked>NOM</ion-label>
                                   <ion-input class="inputStyle"
                                             [(ngModel)] = "cardName"
                                             required>
@@ -96,11 +98,11 @@
                   </ion-card-content>
                 </ion-card>
                     <!-- AFFICHAGE PAYPAL  -->
-                <ion-card>
+                <ion-card *ngIf="radioPayment === 'paypal'">
                   <ion-card-header class="header">
                     <ion-row>
                       <ion-col>
-                        <h2>Payment Paypal</h2>
+                        <h2>Paiement Paypal</h2>
                       </ion-col>
                       <ion-col>
                         <img src="http://i76.imgup.net/accepted_c22e0.png">
@@ -130,11 +132,11 @@
                   </ion-card-content>
                 </ion-card>
                     <!-- AFFICHAGE BANK TRANSFER -->
-                <ion-card>
+                <ion-card *ngIf="radioPayment === 'bankTransfer'">
                   <ion-card-header class="header">
                     <ion-row>
                       <ion-col>
-                        <h2>Payment Bank</h2>
+                        <h2>Paiement par Transfert bancaire</h2>
                       </ion-col>
                       <ion-col>
                         <img src="http://i76.imgup.net/accepted_c22e0.png">

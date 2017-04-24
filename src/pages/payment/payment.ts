@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
-import { FormGroup } from '@angular/forms';
+//import { FormGroup } from '@angular/forms';
 import { JsonService } from '../../providers/json-service';
 
 @Component({
@@ -15,6 +15,7 @@ export class PaymentPage implements OnInit {
   cardNumber: number;
   private errorMessages: any;
   paymentList: any;
+  radioPayment: string;
   //paymentForm: FormGroup;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private jsonService: JsonService) {
@@ -24,6 +25,10 @@ export class PaymentPage implements OnInit {
   ngOnInit(): void {
     this.paymentList = this.jsonService.getPaymentWays();
     console.log(this.paymentList);
+  }
+
+  onRadioChange(payment : string): void{
+    console.log(this.radioPayment);
   }
 
   getErrorMessage(fieldErrors: any): string {

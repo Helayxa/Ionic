@@ -8,9 +8,11 @@ import { ServicePage } from '../pages/service/service';
 import { AdministratorPage } from '../pages/administrator/administrator';
 import { DatabasePage } from '../pages/database/database';
 import { PaymentPage } from '../pages/payment/payment';
+import { ScanerPage } from '../pages/scaner/scaner';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
+import { BarcodeScanner } from '@ionic-native/barcode-scanner';
 
 import { JsonService } from '../providers/json-service';
 import { DatabaseService } from '../providers/database-service';
@@ -28,6 +30,7 @@ import { MultipleCheckboxComponent } from '../components/multiple-checkbox/multi
     OffersListPage,
     ServicePage,
     AdministratorPage,
+    ScanerPage,
     DatabasePage,
     PaymentPage,
     MultipleCheckboxComponent
@@ -43,6 +46,7 @@ import { MultipleCheckboxComponent } from '../components/multiple-checkbox/multi
     OfferFormPage,
     OffersListPage,
     ServicePage,
+    ScanerPage,
     AdministratorPage,
     TabsPage,
     DatabasePage
@@ -53,6 +57,7 @@ import { MultipleCheckboxComponent } from '../components/multiple-checkbox/multi
     JsonService,
     DatabaseService,
     FileService,
+    BarcodeScanner,
     {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]
 })
