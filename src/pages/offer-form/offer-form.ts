@@ -3,6 +3,7 @@ import { Validators, FormBuilder, FormGroup } from '@angular/forms';
 import { NavController, NavParams } from 'ionic-angular';
 
 import { JsonService } from '../../providers/json-service';
+import { DatabaseService } from '../../providers/database-service';
 
 @Component({
   selector: 'page-offer-form',
@@ -23,7 +24,7 @@ export class OfferFormPage implements OnInit {
   private frenchMonth: any[];
   private errorMessages: any;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private formBuilder: FormBuilder, private jsonService: JsonService) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private formBuilder: FormBuilder, private jsonService: JsonService, private databaseService: DatabaseService) {
     this.fields = [];
     this.features = [];
     this.frenchMonth = ['Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre'];
