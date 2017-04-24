@@ -15,21 +15,7 @@ export class AdministratorPage {
   }
 
   ionViewDidEnter() {
-    this.barcodeScanner.scan().then((barcodeData) => {
-      let alert = this.alertCtrl.create({
-      title: 'Yeesssss !!',
-      subTitle: 'Le code barre est détecté !',
-      buttons: ['OK']
-      });
-      alert.present();
-    }, (err) => {
-      let alert = this.alertCtrl.create({
-      title: 'New Friend!',
-      subTitle: 'Your friend, Obi wan Kenobi, just accepted your friend request!',
-      buttons: ['OK']
-      });
-      alert.present();
-    });
+  
   }
 
 }
