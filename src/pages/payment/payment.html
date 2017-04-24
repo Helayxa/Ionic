@@ -1,0 +1,179 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>Paiement</ion-title>
+  </ion-navbar>
+</ion-header>
+
+
+<ion-content padding>
+  <ion-grid>
+      <ion-row>
+          <ion-col *ngFor="let payment of paymentList">
+              <ion-item>
+                <ion-label>{{payment}}</ion-label>
+                <ion-checkbox ngModel="payment" name="payment"></ion-checkbox>
+              </ion-item>
+          </ion-col>
+      </ion-row>
+  </ion-grid>
+    <ion-grid>
+        <ion-row>
+            <ion-col col-xs-12 col-md-4>
+              <!-- AFFICHAGE CREDIT CARD  -->
+                <ion-card *ngIf="payment === 'creditCard'">
+                  <ion-card-header class="header">
+                    <ion-row>
+                      <ion-col>
+                        <h2>Payment Details</h2>
+                      </ion-col>
+                      <ion-col>
+                        <img src="http://i76.imgup.net/accepted_c22e0.png">
+                      </ion-col>
+                    </ion-row>
+                  </ion-card-header>
+                  <ion-card-content>
+                    <!--<form [formGroup] = "paymentForm">-->
+                      <ion-row>
+                          <ion-col col-12>
+                              <ion-item>
+                                <ion-label color="dark" stacked>CARD NUMBER</ion-label>
+                                <ion-input class="inputStyle"
+                                          [(ngModel)] = "cardNumber"
+                                          type="number"
+                                          minlenght="16"
+                                          maxlenght="16"
+                                          required>
+                               </ion-input>
+                              <!-- <ion-item class="error-message-container" *ngIf="paymentForm.controls[cardNumber]?.errors">
+                                 <p class="error-message">{{getErrorMessage(paymentForm.controls[cardNumber]?.errors)}}</p>
+                               </ion-item>-->
+                              </ion-item>
+                          </ion-col>
+                      </ion-row>
+                      <ion-row>
+                          <ion-col col-12>
+                              <ion-item>
+                                <ion-label color="dark" stacked>NAME</ion-label>
+                                  <ion-input class="inputStyle"
+                                            [(ngModel)] = "cardName"
+                                            required>
+                                  </ion-input>
+                              </ion-item>
+                          </ion-col>
+                      </ion-row>
+                      <ion-row>
+                          <ion-col col-7>
+                              <ion-item>
+                                <ion-label color="dark" stacked>EXPIRATION</ion-label>
+                                <ion-datetime class="inputStyle"
+                                              [(ngModel)] = "cardExp"
+                                              displayFormat="MM/YY"
+                                              pickerFormat="MM/YY"
+                                              cancelText="Annuler"
+                                              doneText="Valider"
+                                              required>
+                                </ion-datetime>
+                              </ion-item>
+                          </ion-col>
+                          <ion-col col-5>
+                              <ion-item>
+                                <ion-label color="dark" stacked>CV CODE</ion-label>
+                                  <ion-input class="inputStyle"
+                                            [(ngModel)] = "cardCVC"
+                                            type="number"
+                                            minlength="3"
+                                            maxlenght="3">
+                                </ion-input>
+                              </ion-item>
+                          </ion-col>
+                      </ion-row>
+                      <ion-row>
+                        <ion-col center text-center>
+                          <button color="secondary" ion-button type="submit" (click)="submitForm()">Valider</button>
+                        </ion-col>
+                      </ion-row>
+                  <!--  </form>-->
+                  </ion-card-content>
+                </ion-card>
+                    <!-- AFFICHAGE PAYPAL  -->
+                <ion-card>
+                  <ion-card-header class="header">
+                    <ion-row>
+                      <ion-col>
+                        <h2>Payment Paypal</h2>
+                      </ion-col>
+                      <ion-col>
+                        <img src="http://i76.imgup.net/accepted_c22e0.png">
+                      </ion-col>
+                    </ion-row>
+                  </ion-card-header>
+                  <ion-card-content>
+                    <ion-row>
+                        <ion-col col-12>
+                            <ion-item>
+                              <ion-label color="dark" stacked>NUMERO COMPTE PAYPAL</ion-label>
+                              <ion-input class="inputStyle"
+                                        [(ngModel)] = "numPaypal"
+                                        type="number"
+                                        minlenght="16"
+                                        maxlenght="16"
+                                        required>
+                             </ion-input>
+                            </ion-item>
+                        </ion-col>
+                    </ion-row>
+                    <ion-row>
+                      <ion-col center text-center>
+                        <button color="secondary" ion-button type="submit" (click)="submitForm()">Valider</button>
+                      </ion-col>
+                    </ion-row>
+                  </ion-card-content>
+                </ion-card>
+                    <!-- AFFICHAGE BANK TRANSFER -->
+                <ion-card>
+                  <ion-card-header class="header">
+                    <ion-row>
+                      <ion-col>
+                        <h2>Payment Bank</h2>
+                      </ion-col>
+                      <ion-col>
+                        <img src="http://i76.imgup.net/accepted_c22e0.png">
+                      </ion-col>
+                    </ion-row>
+                  </ion-card-header>
+                  <ion-card-content>
+                    <ion-row>
+                        <ion-col col-12>
+                            <ion-item>
+                              <ion-label color="dark" stacked>BIC</ion-label>
+                              <ion-input class="inputStyle"
+                                        [(ngModel)] = "bic"
+                                        type="text"
+                                        required>
+                             </ion-input>
+                            </ion-item>
+                        </ion-col>
+                    </ion-row>
+                    <ion-row>
+                        <ion-col col-12>
+                            <ion-item>
+                              <ion-label color="dark" stacked>IBAN</ion-label>
+                              <ion-input class="inputStyle"
+                                        [(ngModel)] = "iban"
+                                        type="text"
+                                        required>
+                             </ion-input>
+                            </ion-item>
+                        </ion-col>
+                    </ion-row>
+                    <ion-row>
+                      <ion-col center text-center>
+                        <button color="secondary" ion-button type="submit" (click)="submitForm()">Valider</button>
+                      </ion-col>
+                    </ion-row>
+                  </ion-card-content>
+                </ion-card>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
+</ion-content>
