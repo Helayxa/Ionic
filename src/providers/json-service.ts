@@ -43,6 +43,14 @@ export class JsonService {
     }
   }
 
+  getCommonFields() : any[] {
+    let fields: any[] = [];
+    if(this.serviceData && this.serviceData.commonFields) {
+      fields = this.serviceData.commonFields;
+    }
+    return fields;
+  }
+
   getCommonFieldsByOffer(offerId: number): any[] {
     let fields: any[] = [];
     if(this.serviceData && this.serviceData.commonFields) {
