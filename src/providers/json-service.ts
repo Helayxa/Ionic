@@ -11,6 +11,7 @@ export class JsonService {
   private filePath: string = "Canal.json";
   private serviceData: any;
   private offersList: any[];
+  private paymentList: any[];
 
   constructor(public http: Http) {
     this.offersList = [];
@@ -98,5 +99,15 @@ export class JsonService {
     }
     return features;
   }
+
+  getPaymentWays(): any[] {
+    if(this.serviceData && this.serviceData.paymentWays) {
+      this.paymentList = this.serviceData.paymentWays;
+      return this.paymentList;
+    } else {
+      return null;
+    }
+  }
+
 
 }

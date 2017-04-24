@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Validators, FormBuilder, FormGroup } from '@angular/forms';
 import { NavController, NavParams } from 'ionic-angular';
 
+import { PaymentPage } from '../payment/payment';
+
 import { JsonService } from '../../providers/json-service';
 
 @Component({
@@ -104,9 +106,11 @@ export class OfferFormPage implements OnInit {
   }
 
   submitForm(): void {
-    console.log(this.offerForm);
-    console.log(this.offerForm.value);
-    console.log(this.features);
+    //console.log(this.offerForm);
+    //console.log(this.offerForm.value);
+    //console.log(this.features);
+    this.navCtrl.push(PaymentPage);
+
   }
 
 }
