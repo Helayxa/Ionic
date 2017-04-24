@@ -10,6 +10,7 @@ import { DatabasePage } from '../pages/database/database';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
+import { BarcodeScanner } from '@ionic-native/barcode-scanner';
 
 import { JsonService } from '../providers/json-service';
 import { DatabaseService } from '../providers/database-service';
@@ -47,6 +48,7 @@ import { SuperTabsModule } from 'ionic2-super-tabs';
     JsonService,
     DatabaseService,
     FileService,
+    BarcodeScanner,
     {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]
 })
