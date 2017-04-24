@@ -97,7 +97,7 @@
 
     <br/><br/>
 
-    <ion-list no-li>
+    <ion-list no-li *ngIf="features && features.length > 0">
       <ion-list-header id="features-header">
         Offres complémentaires
       </ion-list-header>
@@ -109,7 +109,9 @@
 
     <ion-row>
       <ion-col center text-center>
-        <button ion-button type="submit" [disabled]="!offerForm.valid">S'inscrire</button>
+        <!--<button ion-button type="submit" [disabled]="!offerForm.valid">S'inscrire</button>-->
+        <button ion-button type="submit">S'inscrire</button>
+
       </ion-col>
     </ion-row>
   </form>
