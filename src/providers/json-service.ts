@@ -11,6 +11,7 @@ export class JsonService {
   private filePath: string = "Canal.json";
   private serviceData: any;
   private offersList: any[];
+  private paymentList: any[];
 
   constructor(public http: Http) {
     this.offersList = [];
@@ -42,20 +43,10 @@ export class JsonService {
     }
   }
 
-  getFieldsByOffer(offerId: number): any[] {
+  getCommonFieldsByOffer(offerId: number): any[] {
     let fields: any[] = [];
-    if(this.serviceData) {
-      for(let field of this.serviceData.commonFields) {
-        fields.push(field);
-      }
-      /*if(this.offersList && this.offersList[offerId]) {
-        let offer: any = this.offersList[offerId];
-        if(offer.specificFields) {
-          for(let field of offer.specificFields) {
-            fields.push(field);
-          }
-        }
-      }*/
+    if(this.serviceData && this.serviceData.commonFields) {
+      fields = this.serviceData.commonFields;
     }
     return fields;
   }
@@ -68,6 +59,17 @@ export class JsonService {
       }
     }
     return commonFieldsIds;
+  }
+
+  getSpecificFieldsByOffer(offerId: number): any[] {
+    let fields: any[] = [];
+    if(this.offersList && this.offersList[offerId]) {
+      let offer: any = this.offersList[offerId];
+      if(offer.specificFields) {
+        fields = offer.specificFields;
+      }
+    }
+    return fields;
   }
 
   getSpecificFieldsIdsByOffer(offerId: number): Array<string> {
@@ -89,5 +91,23 @@ export class JsonService {
     }
     return specificFieldsIds;
   }
+
+  getFeaturesByOffer(offerId: number): any[] {
+    let features: any[] = []
+    if(this.offersList && this.offersList[offerId] && this.offersList[offerId].features) {
+      features = this.offersList[offerId].features;
+    }
+    return features;
+  }
+
+  getPaymentWays(): any[] {
+    if(this.serviceData && this.serviceData.paymentWays) {
+      this.paymentList = this.serviceData.paymentWays;
+      return this.paymentList;
+    } else {
+      return null;
+    }
+  }
+
 
 }

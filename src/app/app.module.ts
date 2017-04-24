@@ -7,6 +7,7 @@ import { OffersListPage } from '../pages/offers-list/offers-list';
 import { ServicePage } from '../pages/service/service';
 import { AdministratorPage } from '../pages/administrator/administrator';
 import { DatabasePage } from '../pages/database/database';
+import { PaymentPage } from '../pages/payment/payment';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -18,6 +19,8 @@ import { FileService } from '../providers/file-service';
 
 import { SuperTabsModule } from 'ionic2-super-tabs';
 
+import { MultipleCheckboxComponent } from '../components/multiple-checkbox/multiple-checkbox';
+
 @NgModule({
   declarations: [
     MyApp,
@@ -26,7 +29,9 @@ import { SuperTabsModule } from 'ionic2-super-tabs';
     OffersListPage,
     ServicePage,
     AdministratorPage,
-    DatabasePage
+    DatabasePage,
+    PaymentPage,
+    MultipleCheckboxComponent
   ],
   imports: [
     SuperTabsModule,
@@ -35,6 +40,7 @@ import { SuperTabsModule } from 'ionic2-super-tabs';
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
+    PaymentPage,
     OfferFormPage,
     OffersListPage,
     ServicePage,
