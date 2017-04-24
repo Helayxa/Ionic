@@ -7,6 +7,7 @@ import { OffersListPage } from '../pages/offers-list/offers-list';
 import { ServicePage } from '../pages/service/service';
 import { AdministratorPage } from '../pages/administrator/administrator';
 import { DatabasePage } from '../pages/database/database';
+import { PaymentPage } from '../pages/payment/payment';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -28,6 +29,7 @@ import { MultipleCheckboxComponent } from '../components/multiple-checkbox/multi
     ServicePage,
     AdministratorPage,
     DatabasePage,
+    PaymentPage,
     MultipleCheckboxComponent
   ],
   imports: [
@@ -37,6 +39,7 @@ import { MultipleCheckboxComponent } from '../components/multiple-checkbox/multi
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
+    PaymentPage,
     OfferFormPage,
     OffersListPage,
     ServicePage,

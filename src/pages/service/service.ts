@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams} from 'ionic-angular';
+import { OffersListPage } from '../offers-list/offers-list';
 import { JsonService } from '../../providers/json-service';
 
 @Component({
@@ -14,6 +15,10 @@ export class ServicePage {
 
   ionViewWillEnter() {
     this.service = this.jsonService.getServiceData();
+  }
+
+  goToOfferList(e): void{
+    this.navCtrl.setRoot(OffersListPage);
   }
 
 }
