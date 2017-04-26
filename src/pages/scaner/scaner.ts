@@ -3,6 +3,7 @@ import { NavController, NavParams } from 'ionic-angular';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner';
 import { AlertController } from 'ionic-angular';
 import { AdministratorPage } from '../administrator/administrator'
+import { ServicePage } from '../service/service';
 
 @Component({
   selector: 'page-scaner',
@@ -30,6 +31,7 @@ export class ScanerPage {
           buttons: ['OK']
           });
         alert.present();
+        this.navCtrl.push(ServicePage, );
       }
     },
     (err) => {
