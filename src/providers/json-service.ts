@@ -17,6 +17,18 @@ export class JsonService {
     this.offersList = [];
   }
 
+
+
+  downloadJson(url: string) : Observable<any> {
+    return this.http.get(url)
+      .map(res => res.json())
+      .catch((error: any) => Observable.throw(error.json() || 'Server error'));
+  }
+
+  setServiceData(serviceData: any) {
+    this.serviceData = serviceData;
+  }
+
   getServiceFile(): Observable<any> {
     return this.http.get(this.filePath)
       .map(res => {

@@ -9,13 +9,7 @@ import { JsonService } from '../../providers/json-service';
 })
 export class ServicePage {
 
-  service: any;
-
   constructor(public navCtrl: NavController, public navParams: NavParams, private jsonService: JsonService) {}
-
-  ionViewWillEnter() {
-    this.service = this.jsonService.getServiceData();
-  }
 
   goToOfferList(e): void{
     this.navCtrl.setRoot(OffersListPage);

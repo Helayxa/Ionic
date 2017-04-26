@@ -2,8 +2,6 @@
 
   <ion-navbar>
     <ion-title>Service</ion-title>
-  </ion-navbar>
-
 </ion-header>
 
 
@@ -12,10 +10,10 @@
       <img src="data:image/png;base64,{{service?.icon}}"/>
       <ion-card-content>
           <ion-card-title>
-            {{service?.title}}
+            {{this.jsonService.getServiceData()?.title}}
           </ion-card-title>
           <p>
-            {{service?.description}} <br><br>
+            {{this.jsonService.getServiceData()?.description}} <br><br>
           </p>
           <ion-item>
             <ion-badge color="primary" item-right large>
