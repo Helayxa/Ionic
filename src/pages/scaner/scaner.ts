@@ -3,6 +3,7 @@ import { NavController, NavParams } from 'ionic-angular';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner';
 import { AlertController } from 'ionic-angular';
 import { AdministratorPage } from '../administrator/administrator'
+
 @Component({
   selector: 'page-scaner',
   templateUrl: 'scaner.html'
@@ -14,7 +15,8 @@ export class ScanerPage {
 
   }
 
-  ionViewDidEnter() {
+  ionViewDidEnter()
+  {
     this.barcodeScanner.scan().then((barcodeData) => {
       if(barcodeData.text == "Je suis administrateur")
       {
@@ -39,5 +41,4 @@ export class ScanerPage {
       alert.present();
     });
   }
-
 }

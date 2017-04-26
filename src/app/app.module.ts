@@ -9,6 +9,7 @@ import { AdministratorPage } from '../pages/administrator/administrator';
 import { DatabasePage } from '../pages/database/database';
 import { PaymentPage } from '../pages/payment/payment';
 import { ScanerPage } from '../pages/scaner/scaner';
+import { JsonDownloadPage } from '../pages/jsonDownload/jsonDownload';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -31,6 +32,7 @@ import { MultipleCheckboxComponent } from '../components/multiple-checkbox/multi
     ServicePage,
     AdministratorPage,
     ScanerPage,
+    JsonDownloadPage,
     DatabasePage,
     PaymentPage,
     MultipleCheckboxComponent
@@ -46,6 +48,7 @@ import { MultipleCheckboxComponent } from '../components/multiple-checkbox/multi
     OfferFormPage,
     OffersListPage,
     ServicePage,
+    JsonDownloadPage,
     ScanerPage,
     AdministratorPage,
     TabsPage,

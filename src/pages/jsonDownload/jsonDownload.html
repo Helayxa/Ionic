@@ -1,0 +1,24 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Nouvelle offre</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+  <ion-card>
+    <ion-card-content>
+      Merci d'entrer l'adresse URL du fichier contenant la nouvelle offre
+      <ion-item>
+        <ion-label stacked>url</ion-label>
+        <ion-input type="text" placeholder="Saisissez l'url" [(ngModel)]="url"></ion-input>
+      </ion-item>
+      <button ion-button block icon-left (click)="urlVerifications()">
+        <ion-icon name="checkmark"></ion-icon>
+        Valider
+      </button>
+    </ion-card-content>
+</ion-card>
+</ion-content>

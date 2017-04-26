@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
-import { BarcodeScanner } from '@ionic-native/barcode-scanner';
-import { AlertController } from 'ionic-angular';
+import { JsonDownloadPage } from '../jsonDownload/jsonDownload';
 
 @Component({
   selector: 'page-administrator',
@@ -10,12 +9,13 @@ import { AlertController } from 'ionic-angular';
 
 export class AdministratorPage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private barcodeScanner: BarcodeScanner, public alertCtrl: AlertController) {
+  constructor(public navCtrl: NavController, public navParams: NavParams) {
 
   }
 
-  ionViewDidEnter() {
-  
+  goToJsonPage()
+  {
+    this.navCtrl.push(JsonDownloadPage, );
   }
 
 }
