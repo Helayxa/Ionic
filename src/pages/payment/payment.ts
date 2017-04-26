@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
-//import { FormGroup } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { JsonService } from '../../providers/json-service';
 
 @Component({
@@ -9,26 +9,82 @@ import { JsonService } from '../../providers/json-service';
 })
 export class PaymentPage implements OnInit {
 
-  cardCVC: number;
-  cardName: string;
-  cardExp: string;
-  cardNumber: number;
   private errorMessages: any;
   paymentList: any;
-  radioPayment: string;
-  //paymentForm: FormGroup;
+  globalForm: FormGroup;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private jsonService: JsonService) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private jsonService: JsonService, private formBuilder : FormBuilder) {
     this.paymentList = [];
   }
 
   ngOnInit(): void {
     this.paymentList = this.jsonService.getPaymentWays();
-    console.log(this.paymentList);
+    this.initFormControls();
   }
 
-  onRadioChange(payment : string): void{
-    console.log(this.radioPayment);
+  initFormControls(): void{
+    this.globalForm = this.formBuilder.group({
+      radioPayment: [null, Validators.required],
+      bankForm: this.formBuilder.group({
+        bic: ['', Validators.required],
+        iban: ['', Validators.required]
+      }),
+      paypalForm: this.formBuilder.group({
+        numPaypal: ['', Validators.required]
+      }),
+      creditCardForm: this.formBuilder.group({
+        cardNumber: ['', Validators.compose([Validators.required, Validators.minLength(16), Validators.maxLength(16)])],
+        cardName: ['', Validators.required],
+        cardExp: ['', Validators.required],
+        cardCVC: ['', Validators.compose([Validators.required, Validators.minLength(3), Validators.maxLength(3)])]
+      })
+    });
+    this.modifyFormControls();
+    this.globalForm.patchValue({radioPayment: this.paymentList[0]});
+  }
+
+  modifyFormControls(): void {
+    this.globalForm.get('radioPayment').valueChanges.subscribe(
+      payment => {
+        console.log("modification du formulaire");
+        if (payment === 'creditCard') {
+          this.globalForm.get('creditCardForm').get('cardNumber').setValidators(Validators.required);
+          this.globalForm.get('creditCardForm').get('cardName').setValidators(Validators.required);
+          this.globalForm.get('creditCardForm').get('cardExp').setValidators(Validators.required);
+          this.globalForm.get('creditCardForm').get('cardCVC').setValidators(Validators.required);
+          this.globalForm.get('paypalForm').get('numPaypal').setValidators([]);
+          this.globalForm.get('bankForm').get('bic').setValidators([]);
+          this.globalForm.get('bankForm').get('iban').setValidators([]);
+        }
+        else if (payment === 'paypal') {
+          this.globalForm.get('creditCardForm').get('cardNumber').setValidators([]);
+          this.globalForm.get('creditCardForm').get('cardName').setValidators([]);
+          this.globalForm.get('creditCardForm').get('cardExp').setValidators([]);
+          this.globalForm.get('creditCardForm').get('cardCVC').setValidators([]);
+          this.globalForm.get('paypalForm').get('numPaypal').setValidators(Validators.required);
+          this.globalForm.get('bankForm').get('bic').setValidators([]);
+          this.globalForm.get('bankForm').get('iban').setValidators([]);
+        }
+        else if (payment === 'bankTransfer'){
+          this.globalForm.get('creditCardForm').get('cardNumber').setValidators([]);
+          this.globalForm.get('creditCardForm').get('cardName').setValidators([]);
+          this.globalForm.get('creditCardForm').get('cardExp').setValidators([]);
+          this.globalForm.get('creditCardForm').get('cardCVC').setValidators([]);
+          this.globalForm.get('paypalForm').get('numPaypal').setValidators([]);
+          this.globalForm.get('bankForm').get('bic').setValidators(Validators.required);
+          this.globalForm.get('bankForm').get('iban').setValidators(Validators.required);
+        }
+          this.globalForm.get('creditCardForm').get('cardNumber').updateValueAndValidity();
+          this.globalForm.get('creditCardForm').get('cardNumber').updateValueAndValidity();
+          this.globalForm.get('creditCardForm').get('cardName').updateValueAndValidity();
+          this.globalForm.get('creditCardForm').get('cardExp').updateValueAndValidity();
+          this.globalForm.get('creditCardForm').get('cardCVC').updateValueAndValidity();
+          this.globalForm.get('paypalForm').get('numPaypal').updateValueAndValidity();
+          this.globalForm.get('bankForm').get('bic').updateValueAndValidity();
+          this.globalForm.get('bankForm').get('iban').updateValueAndValidity();
+      }
+    );
+    console.log(this.globalForm);
   }
 
   getErrorMessage(fieldErrors: any): string {
@@ -46,8 +102,9 @@ export class PaymentPage implements OnInit {
     }
     return errorMessage;
   }
+
   submitForm(): void {
-    console.log("success");
+    console.log(this.globalForm);
   }
 
 }

@@ -107,9 +107,9 @@ export class OfferFormPage implements OnInit {
   }
 
   submitForm(): void {
-    //console.log(this.offerForm);
-    //console.log(this.offerForm.value);
-    //console.log(this.features);
+    console.log(this.offerForm);
+    console.log(this.offerForm.value);
+    console.log(this.features);
     this.navCtrl.push(PaymentPage);
 
   }
