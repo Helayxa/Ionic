@@ -5,7 +5,8 @@ import { JsonService } from '../../providers/json-service';
 
 import { BarcodeScanner } from '@ionic-native/barcode-scanner';
 
-import { AdministratorPage } from '../administrator/administrator'
+import { AdministratorPage } from '../administrator/administrator';
+import { HwstatusPage } from '../hwstatus/hwstatus';
 
 @Component({
   selector: 'page-service',
@@ -42,6 +43,10 @@ export class ServicePage {
         }).present();
       }
     );
+  }
+
+  onHwstatusButtonClicked() {
+    this.navCtrl.push(HwstatusPage);
   }
 
 }

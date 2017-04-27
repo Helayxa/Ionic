@@ -4,8 +4,11 @@
     <ion-title>{{this.jsonService.getServiceData()?.title}}</ion-title>
 
     <ion-buttons end>
+      <button ion-button icon-only (click)="onHwstatusButtonClicked()">
+        <ion-icon name="information-circle"></ion-icon>
+      </button>
       <button ion-button icon-only (click)="onSettingsButtonClicked()">
-        <ion-icon name="md-settings"></ion-icon>
+        <ion-icon name="settings"></ion-icon>
       </button>
     </ion-buttons>
   </ion-navbar>
