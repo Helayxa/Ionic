@@ -3,7 +3,7 @@ import { Platform } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
-import { TabsPage } from '../pages/tabs/tabs';
+import { ServicePage } from '../pages/service/service';
 
 import { DatabaseService } from '../providers/database-service';
 import { JsonService } from '../providers/json-service';
@@ -12,7 +12,7 @@ import { JsonService } from '../providers/json-service';
   templateUrl: 'app.html'
 })
 export class MyApp {
-  rootPage = TabsPage;
+  rootPage = ServicePage;
 
   constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen, private databaseService: DatabaseService, private jsonService: JsonService) {
     platform.ready().then(() => {
@@ -22,13 +22,13 @@ export class MyApp {
 
       this.databaseService.createServiceFilesTableIfNotExists();
       this.databaseService.getLastJson().then(json => {
-        console.log(json);
         this.jsonService.setServiceData(JSON.parse(json));
+        splashScreen.hide();
       }).catch(error => {
         console.log(error);
+        splashScreen.hide();
       });
 
-      splashScreen.hide();
 
     });
 

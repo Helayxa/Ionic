@@ -17,8 +17,6 @@ export class JsonService {
     this.offersList = [];
   }
 
-
-
   downloadJson(url: string) : Observable<any> {
     return this.http.get(url)
       .map(res => res.json())

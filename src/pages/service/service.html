@@ -1,25 +1,22 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>Service</ion-title>
+    <ion-title>{{this.jsonService.getServiceData()?.title}}</ion-title>
+
+    <ion-buttons end>
+      <button ion-button icon-only (click)="onSettingsButtonClicked()">
+        <ion-icon name="md-settings"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+
 </ion-header>
 
 
 <ion-content padding>
-  <ion-card (swipeleft) = "goToOfferList($event)">
-      <img src="data:image/png;base64,{{service?.icon}}"/>
-      <ion-card-content>
-          <ion-card-title>
-            {{this.jsonService.getServiceData()?.title}}
-          </ion-card-title>
-          <p>
-            {{this.jsonService.getServiceData()?.description}} <br><br>
-          </p>
-          <ion-item>
-            <ion-badge color="primary" item-right large>
-              <ion-icon name="share-alt" large></ion-icon>
-            </ion-badge>
-          </ion-item>
-      </ion-card-content>
-  </ion-card>
+  <div>
+    <img padding src="data:image/png;base64,{{this.jsonService.getServiceData()?.icon}}"/>
+    <p text-center padding>{{this.jsonService.getServiceData()?.description}}</p>
+    <button ion-button (click)="pushOffersPage()">Découvrir</button>
+  </div>
 </ion-content>
