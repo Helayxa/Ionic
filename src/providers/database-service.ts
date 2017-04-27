@@ -6,15 +6,71 @@ import 'rxjs/add/operator/catch';
 import { JsonService } from './json-service';
 
 import { SQLite, SQLiteObject } from '@ionic-native/sqlite';
-import { AlertController } from 'ionic-angular';
 
 @Injectable()
 export class DatabaseService {
 
+  private jsonRepoName: string = "json_files.db";
+
   private db: SQLite;
 
-  constructor(private jsonService: JsonService, private alertController: AlertController) {
+  constructor(private jsonService: JsonService) {
     this.db = new SQLite;
+  }
+
+  /*
+    JSON repositoty functions
+  */
+  jsonRepo() : Promise<SQLiteObject> {
+    return this.db.create({
+      name: this.jsonRepoName,
+      location: 'default'
+    });
+  }
+
+  createServiceFilesTableIfNotExists() {
+    this.jsonRepo().then(tx => {
+      tx.executeSql("create table if not exists service(json TEXT);", {}).then(data => {
+        console.log("Table de service json créée");
+      }).catch(error => {
+        console.log("Impossible de créer la table de services json", error);
+      });
+    }).catch(error => {
+      console.log(error);
+    });
+  }
+
+  getLastJson() : Promise<any> {
+    return new Promise((resolve, reject) => {
+      this.jsonRepo().then(tx => {
+        tx.executeSql("select * from service order by rowId desc limit 1", {}).then(data => {
+          console.log(data);
+          if(data.rows.length > 0) {
+            console.log("here");
+            console.log(data.rows.item(0));
+            resolve(data.rows.item(0).json);
+          } else {
+            reject("ERROR : Aucune entrée dans la table JSON !!!")
+          }
+        }).catch(error => {
+          reject(error);
+        });
+      }).catch(error => {
+        reject(error);
+      });
+    });
+  }
+
+  saveJson(json: any) {
+    this.jsonRepo().then(tx => {
+      tx.executeSql("insert into service values(?)", [JSON.stringify(json)]).then(data => {
+        console.log("Json inséré dans la base de données");
+      }).catch(error => {
+        console.log(error);
+      });
+    }).catch(error => {
+      console.log(error);
+    });
   }
 
   database() : Promise<SQLiteObject> {
@@ -71,7 +127,7 @@ export class DatabaseService {
     return query;
   }
 
-  createTablesIfNotExist() : any {
+  createSubscriptionTableIfNotExists() : any {
     this.sql(this.createClientTableSqlStatement(), []).then(data => {
       console.log("Table client créée");
     }).catch(error => {
@@ -104,7 +160,7 @@ export class DatabaseService {
     return this.sql("INSERT INTO offer(idClient,idOffer," + this.jsonService.getSpecificFieldsIdsByOffer(idOffer).join(',') + ") VALUES(" + this.createQuestionMarkList(specificFieldsValues.length + 2) + ")", args);
   }
 
-  subscribe(commonFieldsValues: any[], offerId: number, specificFieldsValues: any[]) : Promise<any> {
+  createSubscription(commonFieldsValues: any[], offerId: number, specificFieldsValues: any[]) : Promise<any> {
     return new Promise((resolve, reject) => {
       this.createClient(commonFieldsValues).then(data => {
         console.log("client créé");

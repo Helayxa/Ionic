@@ -19,7 +19,11 @@ export class OffersListPage {
   }
 
   /* Récupère la liste des offres à l'initialisation du composant */
-  ionViewWillEnter() {
+  ionViewDidEnter() {
+    this.offersList = this.jsonService.getOffersList();
+  }
+
+  ngOnInit() {
     this.offersList = this.jsonService.getOffersList();
   }
 

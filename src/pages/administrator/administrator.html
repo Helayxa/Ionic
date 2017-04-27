@@ -8,8 +8,12 @@
 
 
 <ion-content padding>
-  <button ion-button block icon-left (click)="goToJsonPage()">
+  <ion-item>
+    <ion-label floating>URL de téléchargement</ion-label>
+    <ion-input type="text" [(ngModel)]="url"></ion-input>
+  </ion-item>
+  <button ion-button block icon-left (click)="downloadJson(this.url)">
     <ion-icon name="cloud-upload"></ion-icon>
-    Charger nouvelle offre
+    Télécharger
   </button>
 </ion-content>
