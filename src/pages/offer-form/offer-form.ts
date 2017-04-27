@@ -106,12 +106,24 @@ export class OfferFormPage implements OnInit {
     return errorMessage;
   }
 
-  submitForm(): void {
-    console.log(this.offerForm);
-    console.log(this.offerForm.value);
-    console.log(this.features);
-    this.navCtrl.push(PaymentPage);
+  constructArrayFromObject(fields: any): any[] {
+    let result: any[] = [];
+    for(let property in fields) {
+      result.push(fields[property]);
+    }
+    return result;
+  }
 
+  submitForm(value: any): void {
+    if(value) {
+      let commonFieldsArray: any[] = this.constructArrayFromObject(value.commonFields);
+      let specificFieldsArray: any[] = this.constructArrayFromObject(value.specificFields);
+      this.navCtrl.push(PaymentPage, {
+        commonFields: commonFieldsArray,
+        specificFields: specificFieldsArray
+      });
+    }
+    // console.log(this.features);
   }
 
 }
