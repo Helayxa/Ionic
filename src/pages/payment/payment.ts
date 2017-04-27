@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { JsonService } from '../../providers/json-service';
+import { DatabaseService} from '../../providers/database-service';
 
 @Component({
   selector: 'page-payment',
@@ -13,7 +14,7 @@ export class PaymentPage implements OnInit {
   paymentList: any;
   globalForm: FormGroup;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private jsonService: JsonService, private formBuilder : FormBuilder) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private jsonService: JsonService, private formBuilder : FormBuilder, private databaseService: DatabaseService) {
     this.paymentList = [];
   }
 
@@ -84,7 +85,6 @@ export class PaymentPage implements OnInit {
           this.globalForm.get('bankForm').get('iban').updateValueAndValidity();
       }
     );
-    console.log(this.globalForm);
   }
 
   getErrorMessage(fieldErrors: any): string {
@@ -104,7 +104,18 @@ export class PaymentPage implements OnInit {
   }
 
   submitForm(): void {
-    console.log(this.globalForm);
+    let commonFieldsValue: any[] = this.navParams.get('commonFields');
+    let specificFieldsValue: any[] = this.navParams.get('specificFields');
+    let offerId: number = this.navParams.get('offerId');
+    this.databaseService.createSubscription(commonFieldsValue, offerId, specificFieldsValue).then(
+      success => {
+        
+      }
+    ).catch(
+      error => {
+
+      }
+    );
   }
 
 }
