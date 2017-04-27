@@ -20,7 +20,7 @@
                 </ion-row>
               </ion-card-header>
               <ion-card-content>
-                <form (ngSubmit)="submitForm()">
+                <form (ngSubmit)="submitForm(offerForm.value)">
                   <div [formGroup]="offerForm" >
                     <div *ngFor="let field of fields">
                       <div [ngSwitch]="field?.input">

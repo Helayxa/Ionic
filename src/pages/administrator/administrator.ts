@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
-import { AlertController } from 'ionic-angular';
+import { AlertController, ToastController } from 'ionic-angular';
 
 import { JsonService } from '../../providers/json-service';
 import { DatabaseService } from '../../providers/database-service';
@@ -16,7 +16,7 @@ export class AdministratorPage {
 
   public url: string = "http://files.clemscode.ovh/file2.json";
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private jsonService: JsonService, private databaseService: DatabaseService, private alertController: AlertController) {
+  constructor(public navCtrl: NavController, public toastCtrl: ToastController, public navParams: NavParams, private jsonService: JsonService, private databaseService: DatabaseService, private alertController: AlertController) {
 
   }
 
@@ -27,6 +27,11 @@ export class AdministratorPage {
         this.jsonService.setServiceData(data);
         this.databaseService.saveJson(data);
         this.databaseService.createSubscriptionTableIfNotExists();
+        this.navCtrl.pop();
+        this.toastCtrl.create({
+          message: 'Nouveau service chargé',
+          duration: 2000
+        }).present();
       },
       error => {
         this.alertController.create({

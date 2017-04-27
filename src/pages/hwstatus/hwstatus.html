@@ -1,0 +1,41 @@
+<!--
+  Generated template for the Hwstatus page.
+
+  See http://ionicframework.com/docs/v2/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>État du système</ion-title>
+
+    <ion-buttons end>
+      <button ion-button icon-only (click)="onRefreshButtonClicked()">
+        <ion-icon name="refresh"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+  <ion-card>
+    <ion-card-header>
+      Utilisation CPU : {{this.cpuUsage}} %
+    </ion-card-header>
+    <ion-card-content>
+      <canvas #cpuCanvas></canvas>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card>
+    <ion-card-header>
+      Utilisation RAM
+    </ion-card-header>
+    <ion-card-content>
+      <progressbar [progress]="ramUsage"></progressbar>
+    </ion-card-content>
+  </ion-card>
+
+</ion-content>
