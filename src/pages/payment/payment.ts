@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
+import { NavController, NavParams, ToastController, AlertController } from 'ionic-angular';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { JsonService } from '../../providers/json-service';
 import { DatabaseService} from '../../providers/database-service';
@@ -14,7 +14,7 @@ export class PaymentPage implements OnInit {
   paymentList: any;
   globalForm: FormGroup;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private jsonService: JsonService, private formBuilder : FormBuilder, private databaseService: DatabaseService) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private jsonService: JsonService, private formBuilder : FormBuilder, private databaseService: DatabaseService, private toastCtrl: ToastController, private alertCtrl: AlertController) {
     this.paymentList = [];
   }
 
@@ -107,13 +107,25 @@ export class PaymentPage implements OnInit {
     let commonFieldsValue: any[] = this.navParams.get('commonFields');
     let specificFieldsValue: any[] = this.navParams.get('specificFields');
     let offerId: number = this.navParams.get('offerId');
+    console.log(commonFieldsValue);
+    console.log(specificFieldsValue);
+    console.log(offerId);
     this.databaseService.createSubscription(commonFieldsValue, offerId, specificFieldsValue).then(
       success => {
-        
+        this.toastCtrl.create({
+          message: 'Votre inscription a bien été prise en compte !',
+          duration: 3000
+        }).present();
+        this.navCtrl.popToRoot();
       }
     ).catch(
       error => {
-
+        console.log(error);
+        this.alertCtrl.create({
+          title: 'Inscription refusée',
+          subTitle: 'Impossible d\'enregistrer le formulaire d\'inscription',
+          buttons: ['Fermer']
+        }).present();
       }
     );
   }
