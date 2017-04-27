@@ -24,7 +24,8 @@ export class ServicePage {
   onSettingsButtonClicked() {
     this.barcodeScanner.scan({
       "prompt" : "Placez le QR Code dans le cadre.",
-      "showTorchButton" : true
+      "showTorchButton" : true,
+      "showFlipCameraButton" : true
     }).then(
       barcodeData=> {
         if(barcodeData.text == "Je suis administrateur")

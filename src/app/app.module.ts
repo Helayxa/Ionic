@@ -6,6 +6,7 @@ import { OffersListPage } from '../pages/offers-list/offers-list';
 import { ServicePage } from '../pages/service/service';
 import { PaymentPage } from '../pages/payment/payment';
 import { AdministratorPage } from '../pages/administrator/administrator';
+import { SubscriptionListPage } from '../pages/subscription-list/subscription-list';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -25,7 +26,8 @@ import { MultipleCheckboxComponent } from '../components/multiple-checkbox/multi
     ServicePage,
     PaymentPage,
     MultipleCheckboxComponent,
-    AdministratorPage
+    AdministratorPage,
+    SubscriptionListPage
   ],
   imports: [
     IonicModule.forRoot(MyApp)
@@ -37,7 +39,8 @@ import { MultipleCheckboxComponent } from '../components/multiple-checkbox/multi
     OfferFormPage,
     OffersListPage,
     ServicePage,
-    AdministratorPage
+    AdministratorPage,
+    SubscriptionListPage
   ],
   providers: [
     StatusBar,

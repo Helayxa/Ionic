@@ -5,6 +5,8 @@ import { AlertController } from 'ionic-angular';
 import { JsonService } from '../../providers/json-service';
 import { DatabaseService } from '../../providers/database-service';
 
+import { SubscriptionListPage } from '../subscription-list/subscription-list';
+
 @Component({
   selector: 'page-administrator',
   templateUrl: 'administrator.html'
@@ -34,6 +36,10 @@ export class AdministratorPage {
         }).present();
       }
     );
+  }
+
+  subscriptionList(){
+    this.navCtrl.push(SubscriptionListPage);
   }
 
 }
