@@ -11,27 +11,35 @@ import { ServicePage } from '../service/service';
 })
 
 export class ScanerPage {
+  errorMessage: string;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private barcodeScanner: BarcodeScanner, public alertCtrl: AlertController) {
-
+    this.errorMessage = "";
   }
 
   ionViewDidEnter()
   {
-    this.barcodeScanner.scan().then((barcodeData) => {
+    this.barcodeScanner.scan({
+      "prompt" : "Placez le QR Code dans le cadre." + this.errorMessage,
+      "showTorchButton" : true
+    }).then((barcodeData) => {
       if(barcodeData.text == "Je suis administrateur")
       {
         this.navCtrl.push(AdministratorPage, );
       }
       else
       {
-        let alert = this.alertCtrl.create({
-          title: 'Ohhhhh',
-          subTitle: 'Ce nest pas le bon code barre',
-          buttons: ['OK']
-          });
-        alert.present();
-        this.navCtrl.push(ServicePage, );
+        if(barcodeData.text != "")
+        {
+          this.errorMessage = " QR Code incorrect !"
+          this.navCtrl.setRoot(ScanerPage);
+        }
+        else
+        {
+          this.navCtrl.setRoot(ServicePage);
+        }
+
+
       }
     },
     (err) => {
