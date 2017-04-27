@@ -22,16 +22,25 @@ export class ServicePage {
   }
 
   onSettingsButtonClicked() {
-    this.barcodeScanner.scan().then(
+    this.barcodeScanner.scan({
+      "prompt" : "Placez le QR Code dans le cadre.",
+      "showTorchButton" : true
+    }).then(
       barcodeData=> {
-        if(barcodeData.text == "Je suis administrateur") {
+        if(barcodeData.text == "Je suis administrateur")
+        {
           this.navCtrl.push(AdministratorPage);
-        } else {
-          this.alertCtrl.create({
-            title: 'Accès refusé',
-            subTitle: 'Veuillez scanner le code-barre administrateur.',
-            buttons: ['Fermer']
-          }).present();
+        }
+        else
+        {
+          if(barcodeData.text != "")
+          {
+            this.onSettingsButtonClicked();
+          }
+          else
+          {
+            this.navCtrl.setRoot(ServicePage);
+          }
         }
       },
       err => {
