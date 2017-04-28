@@ -24,6 +24,7 @@ export class HwstatusPage {
 
   public cpuUsage: number;
   public ramUsage: number;
+  public ramUsageDisplay: string;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private toastCtrl: ToastController) {
 
@@ -101,6 +102,7 @@ export class HwstatusPage {
       busySpace = Math.round(busySpace * 100) / 100;
 
       this.ramUsage = percentUse;
+      this.ramUsageDisplay = busySpace + '/' + totalCapacity + 'Go';
     });
   }
 

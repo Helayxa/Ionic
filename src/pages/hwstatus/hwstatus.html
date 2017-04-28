@@ -22,7 +22,7 @@
 <ion-content padding>
   <ion-card>
     <ion-card-header>
-      Utilisation CPU : {{this.cpuUsage}} %
+      <b>Utilisation CPU </b><span class="percentage">{{this.cpuUsage}} %</span>
     </ion-card-header>
     <ion-card-content>
       <canvas #cpuCanvas></canvas>
@@ -31,10 +31,10 @@
 
   <ion-card>
     <ion-card-header>
-      Utilisation RAM
+      <b>Utilisation RAM </b><span class="percentage">{{this.ramUsage}} %</span>
     </ion-card-header>
     <ion-card-content>
-      <progressbar [progress]="ramUsage"></progressbar>
+      <progressbar [progress]="ramUsage" [progressDisplay]="ramUsageDisplay"></progressbar>
     </ion-card-content>
   </ion-card>
 

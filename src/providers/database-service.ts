@@ -44,10 +44,7 @@ export class DatabaseService {
     return new Promise((resolve, reject) => {
       this.jsonRepo().then(tx => {
         tx.executeSql("select * from service order by rowId desc limit 1", {}).then(data => {
-          console.log(data);
           if(data.rows.length > 0) {
-            console.log("here");
-            console.log(data.rows.item(0));
             resolve(data.rows.item(0).json);
           } else {
             reject("ERROR : Aucune entrée dans la table JSON !!!")
@@ -127,17 +124,46 @@ export class DatabaseService {
     return query;
   }
 
+  buildCreateSubscriptionTableSqlStatement() : string {
+    let query: string = 'create table if not exists subscription(';
+    let cols: string[] = [];
+    for(let field of this.jsonService.getCommonFields()) {
+      let col: string = field.fieldId + ' ';
+      if(field.input == 'number')
+        col += 'INTEGER';
+      else
+        col += 'TEXT'
+      cols.push(col);
+    }
+    cols.push('offerId INTEGER');
+    let offerCount = this.jsonService.getOffersList().length;
+    for(let i=0; i<offerCount; i++) {
+      for(let field of this.jsonService.getSpecificFieldsByOffer(i)) {
+        let col: string = field.fieldId + " ";
+        if (field.input == 'number')
+          col += 'INTEGER';
+        else
+          col += 'TEXT';
+        cols.push(col);
+      }
+    }
+    query += cols.join(',') + ');';
+    return query;
+  }
+
   createSubscriptionTableIfNotExists() : any {
-    this.sql(this.createClientTableSqlStatement(), []).then(data => {
-      console.log("Table client créée");
+    this.sql(this.buildCreateSubscriptionTableSqlStatement(), []).then(data => {
+      console.log("Table souscription créée");
     }).catch(error => {
       console.log("Erreur création table", error);
     });
+    /*
     this.sql(this.createOfferTableSqlStatement(), []).then(data => {
       console.log("Table offer créée");
     }).catch(error => {
       console.log("Erreur création table", error);
     });
+    */
   }
 
   createQuestionMarkList(length: number) : string {
@@ -161,6 +187,24 @@ export class DatabaseService {
   }
 
   createSubscription(commonFieldsValues: any[], offerId: number, specificFieldsValues: any[]) : Promise<any> {
+    let query: string = 'insert into subscription(';
+    let fieldsToFill: string[] = [];
+    let values: any[] = [];
+    for(let field of this.jsonService.getCommonFields()) {
+      fieldsToFill.push(field.fieldId);
+    }
+    fieldsToFill.push('offerId');
+    for(let field of this.jsonService.getSpecificFieldsByOffer(offerId)) {
+      fieldsToFill.push(field.fieldId);
+    }
+    query += fieldsToFill.join(',') + ') values(' + this.createQuestionMarkList(fieldsToFill.length) + ');';
+    values = values.concat(commonFieldsValues);
+    values.push(offerId);
+    values = values.concat(specificFieldsValues);
+    return this.sql(query, values);
+
+
+/*
     return new Promise((resolve, reject) => {
       this.createClient(commonFieldsValues).then(data => {
         console.log("client créé");
@@ -174,6 +218,7 @@ export class DatabaseService {
         reject(error);
       });
     });
+    */
   }
 
 }
