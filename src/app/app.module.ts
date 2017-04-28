@@ -6,7 +6,7 @@ import { OffersListPage } from '../pages/offers-list/offers-list';
 import { ServicePage } from '../pages/service/service';
 import { PaymentPage } from '../pages/payment/payment';
 import { AdministratorPage } from '../pages/administrator/administrator';
-import { HwstatusPage } from '../pages/hwstatus/hwstatus';
+import { SubscriptionListPage } from '../pages/subscription-list/subscription-list';import { HwstatusPage } from '../pages/hwstatus/hwstatus';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -28,6 +28,7 @@ import { ProgressbarComponent } from '../components/progressbar/progressbar';
     PaymentPage,
     MultipleCheckboxComponent,
     AdministratorPage,
+    SubscriptionListPage,
     HwstatusPage,
     ProgressbarComponent
   ],
@@ -42,6 +43,7 @@ import { ProgressbarComponent } from '../components/progressbar/progressbar';
     OffersListPage,
     ServicePage,
     AdministratorPage,
+    SubscriptionListPage,
     HwstatusPage
   ],
   providers: [

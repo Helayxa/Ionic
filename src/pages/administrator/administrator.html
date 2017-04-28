@@ -1,19 +1,32 @@
 <ion-header>
-
   <ion-navbar>
     <ion-title>Administrateur</ion-title>
   </ion-navbar>
-
 </ion-header>
 
 
 <ion-content padding>
-  <ion-item>
-    <ion-label floating>URL de téléchargement</ion-label>
-    <ion-input type="text" [(ngModel)]="url"></ion-input>
-  </ion-item>
-  <button ion-button block icon-left (click)="downloadJson(this.url)">
-    <ion-icon name="cloud-upload"></ion-icon>
-    Télécharger
-  </button>
+  <ion-card class="card">
+    <ion-card-content>
+      Merci d'entrer l'adresse URL du fichier contenant le nouveau service.
+      <ion-item>
+        <ion-label floating>URL de téléchargement</ion-label>
+        <ion-input type="text" [(ngModel)]="url"></ion-input>
+      </ion-item>
+      <button ion-button block icon-left (click)="downloadJson(this.url)">
+        <ion-icon name="cloud-download"></ion-icon>
+        Télécharger
+      </button>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card class="card">
+    <ion-card-content>
+      Récupérer la liste des personnes ayant souscrit au service.
+      <button ion-button block icon-left (click)="subscriptionList()">
+        <ion-icon name="archive"></ion-icon>
+        Souscriptions
+      </button>
+    </ion-card-content>
+  </ion-card>
 </ion-content>
