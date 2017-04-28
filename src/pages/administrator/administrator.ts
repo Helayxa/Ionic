@@ -5,6 +5,8 @@ import { AlertController, ToastController } from 'ionic-angular';
 import { JsonService } from '../../providers/json-service';
 import { DatabaseService } from '../../providers/database-service';
 
+import { SubscriptionListPage } from '../subscription-list/subscription-list';
+
 @Component({
   selector: 'page-administrator',
   templateUrl: 'administrator.html'
@@ -39,6 +41,15 @@ export class AdministratorPage {
         }).present();
       }
     );
+  }
+
+  subscriptionList() {
+    this.databaseService.findAllSubscriptions().then(data => {
+      console.log(data);
+    }).catch(error => {
+      console.log(error);
+    });
+    this.navCtrl.push(SubscriptionListPage);
   }
 
 }
