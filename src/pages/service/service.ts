@@ -13,8 +13,15 @@ import { AdministratorPage } from '../administrator/administrator'
 })
 export class ServicePage {
 
+  service: any;
+
   constructor(public navCtrl: NavController, public navParams: NavParams, private jsonService: JsonService, private barcodeScanner: BarcodeScanner, private alertCtrl: AlertController) {
 
+  }
+
+  ionViewWillEnter(): void {
+    console.log("ici");
+    this.service = this.jsonService.getServiceData();
   }
 
   pushOffersPage(e): void{
