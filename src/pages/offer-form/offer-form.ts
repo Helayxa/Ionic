@@ -115,14 +115,13 @@ export class OfferFormPage implements OnInit {
   }
 
   submitForm(value: any): void {
-    if(value) {
-      let commonFieldsArray: any[] = this.constructArrayFromObject(value.commonFields);
-      let specificFieldsArray: any[] = this.constructArrayFromObject(value.specificFields);
-      this.navCtrl.push(PaymentPage, {
-        commonFields: commonFieldsArray,
-        specificFields: specificFieldsArray
-      });
-    }
+    let commonFieldsArray: any[] = this.constructArrayFromObject(value.commonFields);
+    let specificFieldsArray: any[] = this.constructArrayFromObject(value.specificFields);
+    this.navCtrl.push(PaymentPage, {
+      commonFields: commonFieldsArray,
+      specificFields: specificFieldsArray,
+      offerId: this.offerId
+    });
     // console.log(this.features);
   }
 
