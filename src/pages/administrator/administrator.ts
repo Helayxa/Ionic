@@ -43,7 +43,12 @@ export class AdministratorPage {
     );
   }
 
-  subscriptionList(){
+  subscriptionList() {
+    this.databaseService.findAllSubscriptions().then(data => {
+      console.log(data);
+    }).catch(error => {
+      console.log(error);
+    });
     this.navCtrl.push(SubscriptionListPage);
   }
 

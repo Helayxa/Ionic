@@ -91,39 +91,6 @@ export class DatabaseService {
     });
   }
 
-  createClientTableSqlStatement() : string {
-    let query = "create table if not exists client(";
-    let cols: string[] = [];
-    for(let field of this.jsonService.getCommonFields()) {
-      let col: string = field.fieldId + " ";
-      if(field.input == 'number')
-        col += 'INTEGER';
-      else
-        col += 'TEXT'
-      cols.push(col);
-    }
-    query += cols.join(',') + ');';
-    return query;
-  }
-
-  createOfferTableSqlStatement() : string {
-    let query = "create table if not exists offer(idClient,idOffer,";
-    let cols: string[] = [];
-    let offerCount = this.jsonService.getOffersList().length;
-    for(let i=0; i<offerCount; i++) {
-      for(let field of this.jsonService.getSpecificFieldsByOffer(i)) {
-        let col: string = field.fieldId + " ";
-        if (field.input == 'number')
-          col += 'INTEGER';
-        else
-          col += 'TEXT';
-        cols.push(col);
-      }
-    }
-    query += cols.join(',') + ');';
-    return query;
-  }
-
   buildCreateSubscriptionTableSqlStatement() : string {
     let query: string = 'create table if not exists subscription(';
     let cols: string[] = [];
@@ -157,13 +124,6 @@ export class DatabaseService {
     }).catch(error => {
       console.log("Erreur création table", error);
     });
-    /*
-    this.sql(this.createOfferTableSqlStatement(), []).then(data => {
-      console.log("Table offer créée");
-    }).catch(error => {
-      console.log("Erreur création table", error);
-    });
-    */
   }
 
   createQuestionMarkList(length: number) : string {
@@ -174,20 +134,22 @@ export class DatabaseService {
     return a.join(',');
   }
 
-  createClient(commonFieldsValues: any[]) : Promise<any> {
-    return this.sql("INSERT INTO client VALUES(" + this.createQuestionMarkList(commonFieldsValues.length) + ")", commonFieldsValues);
-  }
-
-  createOffer(idClient: number, idOffer: number, specificFieldsValues: any[]) {
-    let args: any[] = [];
-    args.push(idClient);
-    args.push(idOffer);
-    args.push(specificFieldsValues);
-    let comma: string = '';
-    if(this.jsonService.getSpecificFieldsIdsByOffer(idOffer) && this.jsonService.getSpecificFieldsIdsByOffer(idOffer).length > 0) {
-      comma = ',';
-    }
-    return this.sql("INSERT INTO offer(idClient,idOffer" + comma + this.jsonService.getSpecificFieldsIdsByOffer(idOffer).join(',') + ") VALUES(" + this.createQuestionMarkList(specificFieldsValues.length + 2) + ")", args);
+  findAllSubscriptions() : Promise<any> {
+    return new Promise((resolve, reject) => {
+      this.sql('select * from subscription;', []).then(data => {
+        if(data.rows.length > 0) {
+          let result: any[] = [];
+          for(let i=0; i<data.rows.length; i++) {
+            result.push(data.rows.item(i));
+          }
+          resolve(result);
+        } else {
+          resolve([]);
+        }
+      }).catch(error => {
+        reject(error);
+      });
+    });
   }
 
   createSubscription(commonFieldsValues: any[], offerId: number, specificFieldsValues: any[]) : Promise<any> {
@@ -206,23 +168,6 @@ export class DatabaseService {
     values.push(offerId);
     values = values.concat(specificFieldsValues);
     return this.sql(query, values);
-
-
-/*
-    return new Promise((resolve, reject) => {
-      this.createClient(commonFieldsValues).then(data => {
-        console.log("client créé");
-        this.createOffer(data.insertId, offerId, specificFieldsValues).then(data => {
-          console.log("offre créée");
-          resolve(data);
-        }).catch(error => {
-          reject(error);
-        });
-      }).catch(error => {
-        reject(error);
-      });
-    });
-    */
   }
 
 }
