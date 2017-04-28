@@ -13,6 +13,7 @@ import { Component, Input } from '@angular/core';
 export class ProgressbarComponent {
 
   @Input('progress') progress;
+  @Input('progressDisplay') progressDisplay;
 
   constructor() {
 
