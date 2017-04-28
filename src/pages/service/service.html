@@ -17,9 +17,21 @@
 
 
 <ion-content padding>
-  <div>
-    <img padding src="data:image/png;base64,{{this.jsonService.getServiceData()?.icon}}"/>
-    <p text-center padding>{{this.jsonService.getServiceData()?.description}}</p>
-    <button ion-button (click)="pushOffersPage()">Découvrir</button>
+  <div *ngIf="this.jsonService.getServiceData()">
+    <ion-row>
+      <ion-col center text-center>
+        <img padding src="data:image/png;base64,{{this.jsonService.getServiceData()?.icon}}"/>
+        <p text-center padding>{{this.jsonService.getServiceData()?.description}}</p>
+        <button ion-button (click)="pushOffersPage()">Découvrir</button>
+      </ion-col>
+    </ion-row>
+  </div>
+
+  <div *ngIf="!this.jsonService.getServiceData()">
+    <ion-row>
+      <ion-col center text-center>
+         Aucune donnée à afficher. Merci de bien vouloir demander à un administrateur de récupérer le dernier service.
+      </ion-col>
+    </ion-row>
   </div>
 </ion-content>

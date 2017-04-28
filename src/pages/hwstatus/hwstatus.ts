@@ -3,13 +3,6 @@ import { NavController, NavParams, ToastController } from 'ionic-angular';
 
 import { Chart } from 'chart.js';
 
-/*
-  Generated class for the Hwstatus page.
-
-  See http://ionicframework.com/docs/v2/components/#navigation for more info on
-  Ionic pages and navigation.
-*/
-
 declare var chrome: any;
 
 @Component({
