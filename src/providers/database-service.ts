@@ -157,7 +157,11 @@ export class DatabaseService {
     args.push(idClient);
     args.push(idOffer);
     args.push(specificFieldsValues);
-    return this.sql("INSERT INTO offer(idClient,idOffer," + this.jsonService.getSpecificFieldsIdsByOffer(idOffer).join(',') + ") VALUES(" + this.createQuestionMarkList(specificFieldsValues.length + 2) + ")", args);
+    let comma: string = '';
+    if(this.jsonService.getSpecificFieldsIdsByOffer(idOffer) && this.jsonService.getSpecificFieldsIdsByOffer(idOffer).length > 0) {
+      comma = ',';
+    }
+    return this.sql("INSERT INTO offer(idClient,idOffer" + comma + this.jsonService.getSpecificFieldsIdsByOffer(idOffer).join(',') + ") VALUES(" + this.createQuestionMarkList(specificFieldsValues.length + 2) + ")", args);
   }
 
   createSubscription(commonFieldsValues: any[], offerId: number, specificFieldsValues: any[]) : Promise<any> {

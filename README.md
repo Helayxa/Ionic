@@ -5,3 +5,7 @@ Saisir les lignes de commande suivantes dans le dossier du projet pour installer
 SQLite :
 * ionic plugin add cordova-sqlite-storage
 * npm install --save @ionic-native/sqlite
+
+CPU/RAM :
+ionic plugin add cordova-plugin-chrome-apps-system-cpu
+ionic plugin add cordova-plugin-chrome-apps-system-memory

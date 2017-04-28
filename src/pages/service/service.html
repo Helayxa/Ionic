@@ -4,8 +4,11 @@
     <ion-title>{{service?.title}}</ion-title>
 
     <ion-buttons end>
+      <button ion-button icon-only (click)="onHwstatusButtonClicked()">
+        <ion-icon name="information-circle"></ion-icon>
+      </button>
       <button ion-button icon-only (click)="onSettingsButtonClicked()">
-        <ion-icon name="md-settings"></ion-icon>
+        <ion-icon name="settings"></ion-icon>
       </button>
     </ion-buttons>
   </ion-navbar>
@@ -14,21 +17,21 @@
 
 
 <ion-content padding>
-  <div *ngIf="service">
+  <div *ngIf="this.jsonService.getServiceData()">
     <ion-row>
       <ion-col center text-center>
-        <img *ngIf="service?.icon" padding src="data:image/png;base64,{{service?.icon}}"/>
-        <p text-center padding>{{service?.description}}</p>
-        <button ion-button (click)="pushOffersPage()">Découvrir les offres</button>
+        <img padding src="data:image/png;base64,{{this.jsonService.getServiceData()?.icon}}"/>
+        <p text-center padding>{{this.jsonService.getServiceData()?.description}}</p>
+        <button ion-button (click)="pushOffersPage()">Découvrir</button>
       </ion-col>
     </ion-row>
   </div>
-  <div *ngIf="!service">
+
+  <div *ngIf="!this.jsonService.getServiceData()">
     <ion-row>
       <ion-col center text-center>
          Aucune donnée à afficher. Merci de bien vouloir demander à un administrateur de récupérer le dernier service.
       </ion-col>
     </ion-row>
-   
   </div>
 </ion-content>

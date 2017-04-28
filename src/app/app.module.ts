@@ -6,6 +6,7 @@ import { OffersListPage } from '../pages/offers-list/offers-list';
 import { ServicePage } from '../pages/service/service';
 import { PaymentPage } from '../pages/payment/payment';
 import { AdministratorPage } from '../pages/administrator/administrator';
+import { HwstatusPage } from '../pages/hwstatus/hwstatus';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -16,6 +17,7 @@ import { DatabaseService } from '../providers/database-service';
 import { FileService } from '../providers/file-service';
 
 import { MultipleCheckboxComponent } from '../components/multiple-checkbox/multiple-checkbox';
+import { ProgressbarComponent } from '../components/progressbar/progressbar';
 
 @NgModule({
   declarations: [
@@ -25,7 +27,9 @@ import { MultipleCheckboxComponent } from '../components/multiple-checkbox/multi
     ServicePage,
     PaymentPage,
     MultipleCheckboxComponent,
-    AdministratorPage
+    AdministratorPage,
+    HwstatusPage,
+    ProgressbarComponent
   ],
   imports: [
     IonicModule.forRoot(MyApp)
@@ -37,7 +41,8 @@ import { MultipleCheckboxComponent } from '../components/multiple-checkbox/multi
     OfferFormPage,
     OffersListPage,
     ServicePage,
-    AdministratorPage
+    AdministratorPage,
+    HwstatusPage
   ],
   providers: [
     StatusBar,
