@@ -67,12 +67,12 @@
                         </div>
 
                         <div *ngSwitchCase="'radio'" [formGroupName]="field.formGroupName">
-                          <ion-list radio-group [formControlName]="field?.fieldId">
+                          <ion-list no-lines radio-group [formControlName]="field?.fieldId" class="inputStyle">
                             <ion-list-header>
-                              <ion-label color="primary">{{field?.label}} <span *ngIf="field.required">*</span></ion-label>
+                              <ion-label text-wrap color="primary">{{field?.label}} <span *ngIf="field.required">*</span></ion-label>
                             </ion-list-header>
                             <ion-item *ngFor='let choice of field?.params?.choices'>
-                              <ion-label>{{choice?.label}}</ion-label>
+                              <ion-label text-wrap>{{choice?.label}}</ion-label>
                               <ion-radio [value]="choice?.value" [checked]="choice?.selected"></ion-radio>
                             </ion-item>
                           </ion-list>
@@ -82,8 +82,8 @@
                         </div>
 
                         <div *ngSwitchCase="'select'" [formGroupName]="field.formGroupName">
-                          <ion-item>
-                            <ion-label color="primary">{{field?.label}} <span *ngIf="field.required">*</span></ion-label>
+                          <ion-item class="inputStyle">
+                            <ion-label text-wrap color="primary">{{field?.label}} <span *ngIf="field.required">*</span></ion-label>
                             <ion-select
                             cancelText="Annuler"
                             okText = "Valider"
@@ -108,21 +108,20 @@
                     </div>
                   </div>
 
-                  <br/><br/>
-
-                  <ion-list no-li *ngIf="features && features.length > 0">
-                    <ion-list-header id="features-header">
-                      Offres complémentaires
+                  <ion-list no-lines *ngIf="features && features.length > 0" class="inputStyle">
+                    <ion-list-header>
+                      <ion-label color="primary">Offres complémentaires</ion-label>
                     </ion-list-header>
                     <ion-item *ngFor="let feature of features">
-                      <ion-label>{{feature.title}} ({{feature.description}}). Coût supplémentaire : {{feature.price}} €</ion-label>
-                      <ion-checkbox [(ngModel)]="feature.selected" name="feature"></ion-checkbox>
+                      <ion-label text-wrap>{{feature.title}} ({{feature.description}}). Coût supplémentaire : {{feature.price}} €</ion-label>
+                      <ion-checkbox [(ngModel)]="feature.selected" (ngModelChange)="updatePrice(feature)" name="feature"></ion-checkbox>
                     </ion-item>
                   </ion-list>
 
                   <ion-row>
                     <ion-col center text-center>
-                      <button ion-button type="submit" [disabled]="!offerForm.valid">S'inscrire</button>
+                      <!--<button ion-button type="submit" [disabled]="!offerForm.valid">S'inscrire</button>-->
+                      <button ion-button type="submit">S'inscrire pour {{price}} €</button>
                     </ion-col>
                   </ion-row>
                 </form>

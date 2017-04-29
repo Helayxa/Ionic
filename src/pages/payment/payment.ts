@@ -50,14 +50,13 @@ export class PaymentPage implements OnInit {
     });
     this.modifyFormControls();
     if(this.paymentList && this.paymentList[0]) {
-      this.globalForm.patchValue({radioPayment: this.paymentList[0].value});
+      this.globalForm.patchValue({ radioPayment: this.paymentList[0].value});
     }
   }
 
   modifyFormControls(): void {
     this.globalForm.get('radioPayment').valueChanges.subscribe(
       payment => {
-        console.log("modification du formulaire");
         if (payment === 'creditCard') {
           this.globalForm.get('creditCardForm').get('cardNumber').setValidators(Validators.required);
           this.globalForm.get('creditCardForm').get('cardName').setValidators(Validators.required);
@@ -117,25 +116,25 @@ export class PaymentPage implements OnInit {
     let commonFieldsValue: any[] = this.navParams.get('commonFields');
     let specificFieldsValue: any[] = this.navParams.get('specificFields');
     let offerId: number = this.navParams.get('offerId');
-    console.log(this.globalForm);
-    // this.databaseService.createSubscription(commonFieldsValue, offerId, specificFieldsValue).then(
-    //   success => {
-    //     this.toastCtrl.create({
-    //       message: 'Votre inscription a bien été prise en compte !',
-    //       duration: 3000
-    //     }).present();
-    //     this.navCtrl.popToRoot();
-    //   }
-    // ).catch(
-    //   error => {
-    //     console.log(error);
-    //     this.alertCtrl.create({
-    //       title: 'Inscription refusée',
-    //       subTitle: 'Impossible d\'enregistrer le formulaire d\'inscription',
-    //       buttons: ['Fermer']
-    //     }).present();
-    //   }
-    // );
+    let features: string = this.navParams.get('features');
+    this.databaseService.createSubscription(commonFieldsValue, offerId, specificFieldsValue).then(
+      success => {
+        this.toastCtrl.create({
+          message: 'Votre inscription a bien été prise en compte !',
+          duration: 3000
+        }).present();
+        this.navCtrl.popToRoot();
+      }
+    ).catch(
+      error => {
+        console.log(error);
+        this.alertCtrl.create({
+          title: 'Inscription refusée',
+          subTitle: 'Impossible d\'enregistrer le formulaire d\'inscription',
+          buttons: ['Fermer']
+        }).present();
+      }
+    );
   }
 
 }
