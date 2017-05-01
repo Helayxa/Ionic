@@ -119,8 +119,19 @@ export class JsonService {
   }
 
   getPaymentWays(): any[] {
-    if(this.serviceData && this.serviceData.paymentWays) {
-      this.paymentList = this.serviceData.paymentWays;
+    if(this.serviceData && this.serviceData.paymentWays && this.serviceData.paymentWays.length > 0) {
+      this.paymentList = [];
+      for(let paymentWay of this.serviceData.paymentWays) {
+        let label: string;
+        if(paymentWay === 'creditCard') {
+          label = 'Carte de crédit';
+        } else if(paymentWay === 'bankTransfer') {
+          label = 'Transfert banquaire';
+        } else if(paymentWay === 'paypal') {
+          label = 'Paypal';
+        }
+        this.paymentList.push({label: label, value: paymentWay});
+      }
       return this.paymentList;
     } else {
       return null;

@@ -15,12 +15,20 @@ export class PaymentPage implements OnInit {
   globalForm: FormGroup;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private jsonService: JsonService, private formBuilder : FormBuilder, private databaseService: DatabaseService, private toastCtrl: ToastController, private alertCtrl: AlertController) {
-    this.paymentList = [];
+
   }
 
   ngOnInit(): void {
-    this.paymentList = this.jsonService.getPaymentWays();
+    this.initPaymentWays();
     this.initFormControls();
+  }
+
+  ionViewWillEnter(): void {
+    this.initPaymentWays();
+  }
+
+  initPaymentWays(): void {
+    this.paymentList = this.jsonService.getPaymentWays();
   }
 
   initFormControls(): void{
@@ -41,13 +49,14 @@ export class PaymentPage implements OnInit {
       })
     });
     this.modifyFormControls();
-    this.globalForm.patchValue({radioPayment: this.paymentList[0]});
+    if(this.paymentList && this.paymentList[0]) {
+      this.globalForm.patchValue({ radioPayment: this.paymentList[0].value});
+    }
   }
 
   modifyFormControls(): void {
     this.globalForm.get('radioPayment').valueChanges.subscribe(
       payment => {
-        console.log("modification du formulaire");
         if (payment === 'creditCard') {
           this.globalForm.get('creditCardForm').get('cardNumber').setValidators(Validators.required);
           this.globalForm.get('creditCardForm').get('cardName').setValidators(Validators.required);
@@ -107,9 +116,7 @@ export class PaymentPage implements OnInit {
     let commonFieldsValue: any[] = this.navParams.get('commonFields');
     let specificFieldsValue: any[] = this.navParams.get('specificFields');
     let offerId: number = this.navParams.get('offerId');
-    console.log(commonFieldsValue);
-    console.log(specificFieldsValue);
-    console.log(offerId);
+    let features: string = this.navParams.get('features');
     this.databaseService.createSubscription(commonFieldsValue, offerId, specificFieldsValue).then(
       success => {
         this.toastCtrl.create({

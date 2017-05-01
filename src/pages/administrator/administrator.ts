@@ -14,7 +14,7 @@ import { SubscriptionListPage } from '../subscription-list/subscription-list';
 
 export class AdministratorPage {
 
-  public url: string = "http://files.clemscode.ovh/file2.json";
+  public url: string = "Canal.json";
 
   constructor(public navCtrl: NavController, public toastCtrl: ToastController, public navParams: NavParams, private jsonService: JsonService, private databaseService: DatabaseService, private alertController: AlertController) {
 

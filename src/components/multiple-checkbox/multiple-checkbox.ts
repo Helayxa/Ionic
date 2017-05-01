@@ -43,6 +43,7 @@ export class MultipleCheckboxComponent implements ControlValueAccessor, AfterVie
     this.checkboxValues[choice.value] = event;
     let valueToEmit: any = this.constructValueToEmit();
     this.onChange(valueToEmit);
+    this.onTouched();
   }
 
   constructValueToEmit(): any {
