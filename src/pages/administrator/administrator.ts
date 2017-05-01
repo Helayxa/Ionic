@@ -15,7 +15,7 @@ import { Md5 } from 'ts-md5/dist/md5';
 
 export class AdministratorPage {
 
-  public url: string = "Canal.json";
+  public url: string = 'http://files.clemscode.ovh/file2.json';
 
   public services: any[];
 
@@ -39,17 +39,28 @@ export class AdministratorPage {
     this.jsonService.downloadJson(url).subscribe(
       data => {
         //TODO check data validity here and show alert if not valid (don't add to database) /!\
-        let hash: string = Md5.hashStr(JSON.stringify(data)) as string;
-        this.jsonService.setServiceData(data);
-        this.jsonService.currentHash = hash;
-        this.databaseService.saveJson(hash, data);
-        this.databaseService.createSubscriptionTableIfNotExists();
         loader.dismiss();
-        this.navCtrl.pop();
-        this.toastCtrl.create({
-          message: 'Nouveau service chargé',
-          duration: 2000
-        }).present();
+        let hash: string = Md5.hashStr(JSON.stringify(data)) as string;
+        this.databaseService.isHashExisting(hash).then(exists => {
+          if(exists) {
+            this.alertController.create({
+              title: 'Conflit détecté',
+              subTitle: 'Ce service a déjà été téléchargé auparavant. Voulez-vous conserver les anciennes données ?',
+              buttons: [{
+                text: 'Effacer',
+                handler: () => { this.onEraseButtonClicked(data, hash); }
+              },{
+                text: 'Conserver',
+                handler: () => { this.onKeepButtonClicked(data, hash); }
+              }]
+            }).present();
+          } else {
+            this.setCurrentService(data, hash);
+            this.exitSuccess();
+          }
+        }).catch(error => {
+          console.log('Cannot check if hash exists ...');
+        });
       },
       error => {
         loader.dismiss();
@@ -62,6 +73,35 @@ export class AdministratorPage {
     );
   }
 
+  onEraseButtonClicked(data: any, hash: string) {
+    this.databaseService.deleteServiceDatabase(hash).then(d1 => {
+      this.databaseService.deleteJsonEntry(hash).then(d2 => {
+        this.setCurrentService(data, hash);
+        this.exitSuccess();
+      }).catch(error => {
+        console.log('cannot deleteJsonEntry', error);
+      });
+    }).catch(error => {
+      console.log('cannot delete database', error);
+    })
+  }
+
+  onKeepButtonClicked(data: any, hash: string) {
+    this.databaseService.deleteJsonEntry(hash).then(success => {
+      this.setCurrentService(data, hash);
+      this.exitSuccess();
+    }).catch(error => {
+      console.log('cannot deleteJsonEntry', error);
+    });
+  }
+
+  setCurrentService(data: any, hash: string) {
+    this.jsonService.setServiceData(data);
+    this.jsonService.currentHash = hash;
+    this.databaseService.saveJson(hash, data);
+    this.databaseService.createSubscriptionTableIfNotExists();
+  }
+
   onListItemSelected(service: any) {
     this.navCtrl.push(SubscriptionListPage, {
       hash: service.hash,
@@ -69,13 +109,12 @@ export class AdministratorPage {
     });
   }
 
-  subscriptionList() {
-    this.databaseService.findAllSubscriptions(this.jsonService.currentHash).then(data => {
-      console.log(data);
-    }).catch(error => {
-      console.log(error);
-    });
-    this.navCtrl.push(SubscriptionListPage);
+  exitSuccess() {
+    this.navCtrl.pop();
+    this.toastCtrl.create({
+      message: 'Nouveau service chargé',
+      duration: 2000
+    }).present();
   }
 
 }

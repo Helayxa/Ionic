@@ -42,12 +42,28 @@ export class DatabaseService {
     });
   }
 
+  isHashExisting(hash: string) : Promise<boolean> {
+    return new Promise((resolve, reject) => {
+      this.queryJsonRepository('select * from service where hash=?', [hash]).then(data => {
+        if(data.rows.length > 0) {
+          resolve(true);
+        } else {
+          resolve(false);
+        }
+      }).catch(error => reject(error));
+    });
+  }
+
   createServiceFilesTableIfNotExists() {
     this.queryJsonRepository('create table if not exists service(hash TEXT, json TEXT);', []).then(data => {
       console.log("Table de service json créée");
     }).catch(error => {
       console.log("Impossible de créer la table de services json", error);
     });
+  }
+
+  deleteJsonEntry(hash: string) : Promise<any> {
+    return this.queryJsonRepository('delete from service where hash=?', [hash]);
   }
 
   getLastJsonEntry() : Promise<any> {
@@ -78,7 +94,10 @@ export class DatabaseService {
         if(data.rows.length > 0) {
           let result: any[] = [];
           for(let i=0; i<data.rows.length; i++) {
-            result.push(data.rows.item(i));
+            result.push({
+              hash: data.rows.item(i).hash,
+              json: JSON.parse(data.rows.item(i).json)
+            });
           }
           resolve(result);
         } else {
@@ -92,6 +111,13 @@ export class DatabaseService {
 
   openServiceDatabase(hash: string) : Promise<SQLiteObject> {
     return this.db.create({
+      name: hash + '.db',
+      location: 'default'
+    });
+  }
+
+  deleteServiceDatabase(hash: string) : Promise<SQLiteObject> {
+    return this.db.deleteDatabase({
       name: hash + '.db',
       location: 'default'
     });
@@ -173,6 +199,9 @@ export class DatabaseService {
   }
 
   createSubscription(commonFieldsValues: any[], offerId: number, specificFieldsValues: any[]) : Promise<any> {
+    console.log("CommonFields : ", commonFieldsValues);
+    console.log("ID offre : ", offerId);
+    console.log("SpecificFields : ", specificFieldsValues);
     let query: string = 'insert into subscription(';
     let fieldsToFill: string[] = [];
     let values: any[] = [];
@@ -187,6 +216,7 @@ export class DatabaseService {
     values = values.concat(commonFieldsValues);
     values.push(offerId);
     values = values.concat(specificFieldsValues);
+    console.log(query);
     return this.queryServiceDatabase(query, values);
   }
 
