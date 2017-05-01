@@ -21,8 +21,9 @@ export class MyApp {
       statusBar.styleDefault();
 
       this.databaseService.createServiceFilesTableIfNotExists();
-      this.databaseService.getLastJson().then(json => {
-        this.jsonService.setServiceData(JSON.parse(json));
+      this.databaseService.getLastJsonEntry().then(data => {
+        this.jsonService.setServiceData(JSON.parse(data.json));
+        this.jsonService.currentHash = data.hash;
         splashScreen.hide();
       }).catch(error => {
         console.log(error);

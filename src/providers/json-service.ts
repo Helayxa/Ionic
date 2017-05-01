@@ -13,6 +13,8 @@ export class JsonService {
   private offersList: any[];
   private paymentList: any[];
 
+  public currentHash: string;
+
   constructor(public http: Http) {
     this.offersList = [];
   }

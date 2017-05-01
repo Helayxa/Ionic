@@ -35,7 +35,7 @@ export class SubscriptionListPage {
     this.paymentWayChart = new Chart(this.paymentWayCanvas.nativeElement, {
       type: 'doughnut',
       data: {
-        labels: ['PayPal', 'Carte de crÃ©dit', 'Virement bancaire'],
+        labels: ['PayPal', 'Carte de crédit', 'Virement bancaire'],
         datasets: [{
           label: 'Moyens de paiement',
           data: [10, 50, 40],

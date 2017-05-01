@@ -14,7 +14,6 @@ import { BarcodeScanner } from '@ionic-native/barcode-scanner';
 
 import { JsonService } from '../providers/json-service';
 import { DatabaseService } from '../providers/database-service';
-import { FileService } from '../providers/file-service';
 
 import { MultipleCheckboxComponent } from '../components/multiple-checkbox/multiple-checkbox';
 import { ProgressbarComponent } from '../components/progressbar/progressbar';
@@ -51,7 +50,6 @@ import { ProgressbarComponent } from '../components/progressbar/progressbar';
     SplashScreen,
     JsonService,
     DatabaseService,
-    FileService,
     BarcodeScanner,
     {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]
