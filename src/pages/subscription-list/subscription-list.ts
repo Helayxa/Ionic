@@ -24,18 +24,25 @@ export class SubscriptionListPage {
   @ViewChild('tendencyCanvas') tendencyCanvas;
   tendencyChart: any;
 
-  databaseInfo: Promise<any>;
+  private hash: string;
+  private json: any;
+  private databaseInfo: Promise<any>;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private databaseService: DatabaseService) {}
+  constructor(public navCtrl: NavController, public navParams: NavParams, public databaseService: DatabaseService) {
+    this.hash = navParams.get('hash');
+    this.json = navParams.get('json');
+  }
 
   ionViewDidLoad()
   {
-    this.databaseInfo = this.databaseService.findAllSubscriptions();
-    console.log("data:" + this.databaseInfo);
+    console.log(this.hash);
+    this.databaseInfo = this.databaseService.findAllSubscriptions(this.hash).then(data => { console.log(data); }).catch(error => { console.log(error); });
+    console.log(this.databaseInfo);
+    //console.log(this.json);
     this.paymentWayChart = new Chart(this.paymentWayCanvas.nativeElement, {
       type: 'doughnut',
       data: {
-        labels: ['PayPal', 'Carte de crédit', 'Virement bancaire'],
+        labels: ['PayPal', 'Carte de crÃ©dit', 'Virement bancaire'],
         datasets: [{
           label: 'Moyens de paiement',
           data: [10, 50, 40],
