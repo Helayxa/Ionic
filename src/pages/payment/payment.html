@@ -9,14 +9,14 @@
     <ion-grid>
         <ion-row>
             <ion-col col-xs-12 col-md-4 offset-xl-4 offset-md-4>
-              <form [formGroup]="globalForm">
+              <form [formGroup]="globalForm" (ngSubmit)="submitForm()">
                 <ion-grid>
                     <ion-list radio-group formControlName="radioPayment">
                       <ion-row>
-                          <ion-col *ngFor="let payment of paymentList">
-                              <ion-item>
-                                <ion-label>{{payment}}</ion-label>
-                                <ion-radio [value]="payment"></ion-radio>
+                          <ion-col>
+                              <ion-item *ngFor="let payment of paymentList">
+                                <ion-label>{{payment.label}}</ion-label>
+                                <ion-radio [value]="payment.value" [checked]="payment.value === globalForm.value['radioPayment']"></ion-radio>
                               </ion-item>
                           </ion-col>
                         </ion-row>
@@ -39,30 +39,36 @@
                         <ion-row>
                             <ion-col col-12>
                                 <ion-item>
-                                  <ion-label color="dark" stacked>NUMERO DE CARTE</ion-label>
+                                  <ion-label color="dark" stacked>NUMERO DE CARTE *</ion-label>
                                   <ion-input class="inputStyle"
                                             formControlName="cardNumber"
                                             type="number"
                                             >
                                  </ion-input>
                                 </ion-item>
+                                <ion-item class="error-message-container" *ngIf="globalForm.controls['creditCardForm']?.controls['cardNumber']?.errors && globalForm.controls['creditCardForm']?.controls['cardNumber']?.touched">
+                                  <p class="error-message">{{getErrorMessage(globalForm.controls['creditCardForm']?.controls['cardNumber']?.errors)}}</p>
+                                </ion-item>
                             </ion-col>
                         </ion-row>
                         <ion-row>
                             <ion-col col-12>
                                 <ion-item>
-                                  <ion-label color="dark" stacked>NOM</ion-label>
+                                  <ion-label color="dark" stacked>NOM *</ion-label>
                                     <ion-input class="inputStyle"
                                               formControlName="cardName"
                                               >
                                     </ion-input>
+                                </ion-item>
+                                <ion-item class="error-message-container" *ngIf="globalForm.controls['creditCardForm']?.controls['cardName']?.errors && globalForm.controls['creditCardForm']?.controls['cardName']?.touched">
+                                  <p class="error-message">{{getErrorMessage(globalForm.controls['creditCardForm']?.controls['cardName']?.errors)}}</p>
                                 </ion-item>
                             </ion-col>
                         </ion-row>
                         <ion-row>
                             <ion-col col-7>
                                 <ion-item>
-                                  <ion-label color="dark" stacked>EXPIRATION</ion-label>
+                                  <ion-label color="dark" stacked>EXPIRATION *</ion-label>
                                   <ion-datetime class="inputStyle"
                                                 formControlName="cardExp"
                                                 displayFormat="MM/YY"
@@ -72,21 +78,27 @@
                                                 >
                                   </ion-datetime>
                                 </ion-item>
+                                <ion-item class="error-message-container" *ngIf="globalForm.controls['creditCardForm']?.controls['cardExp']?.errors">
+                                  <p class="error-message">{{getErrorMessage(globalForm.controls['creditCardForm']?.controls['cardExp']?.errors)}}</p>
+                                </ion-item>
                             </ion-col>
                             <ion-col col-5>
                                 <ion-item>
-                                  <ion-label color="dark" stacked>CV CODE</ion-label>
+                                  <ion-label color="dark" stacked>CV CODE *</ion-label>
                                     <ion-input class="inputStyle"
                                               formControlName="cardCVC"
                                               type="number"
                                               >
                                   </ion-input>
                                 </ion-item>
+                                <ion-item class="error-message-container" *ngIf="globalForm.controls['creditCardForm']?.controls['cardCVC']?.errors && globalForm.controls['creditCardForm']?.controls['cardCVC']?.touched">
+                                  <p class="error-message">{{getErrorMessage(globalForm.controls['creditCardForm']?.controls['cardCVC']?.errors)}}</p>
+                                </ion-item>
                             </ion-col>
                         </ion-row>
                         <ion-row>
                           <ion-col center text-center>
-                            <button color="secondary" ion-button type="submit"  [disabled]='!globalForm.valid' (click)="submitForm()">Valider</button>
+                            <button color="secondary" ion-button type="submit"  [disabled]='!globalForm.valid'>Valider</button>
                           </ion-col>
                         </ion-row>
                       </ion-card-content>
@@ -97,7 +109,7 @@
                       <ion-card-header class="header">
                         <ion-row>
                           <ion-col>
-                            <h2>Paiement Paypal</h2>
+                            <h2>Détails du paiement</h2>
                           </ion-col>
                           <ion-col>
                             <img src="http://i76.imgup.net/accepted_c22e0.png">
@@ -108,18 +120,21 @@
                         <ion-row>
                             <ion-col col-12>
                                 <ion-item>
-                                  <ion-label color="dark" stacked>NUMERO COMPTE PAYPAL</ion-label>
+                                  <ion-label color="dark" stacked>NUMERO COMPTE PAYPAL *</ion-label>
                                   <ion-input class="inputStyle"
                                             formControlName="numPaypal"
                                             type="number"
                                             >
                                  </ion-input>
                                 </ion-item>
+                                <ion-item class="error-message-container" *ngIf="globalForm.controls['paypalForm']?.controls['numPaypal']?.errors && globalForm.controls['paypalForm']?.controls['numPaypal']?.touched">
+                                  <p class="error-message">{{getErrorMessage(globalForm.controls['paypalForm']?.controls['numPaypal']?.errors)}}</p>
+                                </ion-item>
                             </ion-col>
                         </ion-row>
                         <ion-row>
                           <ion-col center text-center>
-                            <button color="secondary" ion-button type="submit"  [disabled]='!globalForm.valid' (click)="submitForm()">Valider</button>
+                            <button color="secondary" ion-button type="submit"  [disabled]='!globalForm.valid'>Valider</button>
                           </ion-col>
                         </ion-row>
                       </ion-card-content>
@@ -131,7 +146,7 @@
                       <ion-card-header class="header">
                         <ion-row>
                           <ion-col>
-                            <h2>Paiement par Transfert bancaire</h2>
+                            <h2>Détails du paiement</h2>
                           </ion-col>
                           <ion-col>
                             <img src="http://i76.imgup.net/accepted_c22e0.png">
@@ -142,30 +157,36 @@
                         <ion-row>
                             <ion-col col-12>
                                 <ion-item>
-                                  <ion-label color="dark" stacked>BIC</ion-label>
+                                  <ion-label color="dark" stacked>BIC *</ion-label>
                                   <ion-input class="inputStyle"
                                             type="text"
                                             formControlName="bic"
                                             >
                                  </ion-input>
                                 </ion-item>
+                                <ion-item class="error-message-container" *ngIf="globalForm.controls['bankForm']?.controls['bic']?.errors && globalForm.controls['bankForm']?.controls['bic']?.touched">
+                                  <p class="error-message">{{getErrorMessage(globalForm.controls['bankForm']?.controls['bic']?.errors)}}</p>
+                                </ion-item>
                             </ion-col>
                         </ion-row>
                         <ion-row>
                             <ion-col col-12>
                                 <ion-item>
-                                  <ion-label color="dark" stacked>IBAN</ion-label>
+                                  <ion-label color="dark" stacked>IBAN *</ion-label>
                                   <ion-input class="inputStyle"
                                             formControlName="iban"
                                             type="text"
                                             >
                                  </ion-input>
                                 </ion-item>
+                                <ion-item class="error-message-container" *ngIf="globalForm.controls['bankForm']?.controls['iban']?.errors && globalForm.controls['bankForm']?.controls['iban']?.touched">
+                                  <p class="error-message">{{getErrorMessage(globalForm.controls['bankForm']?.controls['iban']?.errors)}}</p>
+                                </ion-item>
                             </ion-col>
                         </ion-row>
                         <ion-row>
                           <ion-col center text-center>
-                            <button color="secondary" ion-button type="submit" [disabled]='!globalForm.valid' (click)="submitForm()">Valider</button>
+                            <button color="secondary" ion-button type="submit" [disabled]='!globalForm.valid'>Valider</button>
                           </ion-col>
                         </ion-row>
                       </ion-card-content>

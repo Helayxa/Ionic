@@ -25,6 +25,7 @@ export class OfferFormPage implements OnInit {
   private offerForm: FormGroup;
   private frenchMonth: any[];
   private errorMessages: any;
+  private price: number;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private formBuilder: FormBuilder, private jsonService: JsonService, private databaseService: DatabaseService) {
     this.fields = [];
@@ -33,6 +34,7 @@ export class OfferFormPage implements OnInit {
     this.offerId = this.navParams.get('id');
     this.commonFields = this.navParams.get('commonFields');
     this.specificFields = this.navParams.get('specificFields');
+    this.price = this.navParams.get('price');
   }
 
   ngOnInit(): void {
@@ -59,11 +61,13 @@ export class OfferFormPage implements OnInit {
     let defaultValue: any = null;
     for(let field of this.commonFields) {
       let validators: any = this.generateValidatorsForField(field);
+      defaultValue = this.getDefaultValueForField(field);
       commonFieldsFormGroup[field.fieldId] = validators.length > 1 ? [defaultValue, Validators.compose(validators)] : [defaultValue, validators];
     }
 
     for(let field of this.specificFields) {
       let validators: any = this.generateValidatorsForField(field);
+      defaultValue = this.getDefaultValueForField(field);
       specificFieldsFormGroup[field.fieldId] = validators.length > 1 ? [defaultValue, Validators.compose(validators)] : [defaultValue, validators];
     }
 
@@ -71,6 +75,20 @@ export class OfferFormPage implements OnInit {
       commonFields: this.formBuilder.group(commonFieldsFormGroup),
       specificFields: this.formBuilder.group(specificFieldsFormGroup)
     });
+  }
+
+  getDefaultValueForField(field: any): any {
+    let valueToReturn: any = null;
+    if(field.input === 'select' || field.input === 'radio') {
+      if(field.params && field.params.choices && field.params.choices.length > 0) {
+        for(let choice of field.params.choices) {
+          if(choice.selected) {
+            valueToReturn = choice.value;
+          }
+        }
+      }
+    }
+    return valueToReturn;
   }
 
   generateValidatorsForField(field: any): any[] {
@@ -108,21 +126,46 @@ export class OfferFormPage implements OnInit {
 
   constructArrayFromObject(fields: any): any[] {
     let result: any[] = [];
-    for(let property in fields) {
-      result.push(fields[property]);
+    if(fields && fields.length > 0) {
+      for(let property in fields) {
+        result.push(fields[property]);
+      }
     }
     return result;
+  }
+
+  updatePrice(feature: any): any {
+    if(feature.selected) {
+      this.price += feature.price;
+    } else {
+      this.price -= feature.price;
+    }
+  }
+
+  constructFeatures(): string {
+    let valueToReturn: any[] = [];
+    for(let i: number = 0; i < this.features.length; i++) {
+      if(this.features[i].selected) {
+        valueToReturn.push(i);
+      }
+    }
+    return valueToReturn.join();
   }
 
   submitForm(value: any): void {
     let commonFieldsArray: any[] = this.constructArrayFromObject(value.commonFields);
     let specificFieldsArray: any[] = this.constructArrayFromObject(value.specificFields);
+    let featuresForDatabase: string = this.constructFeatures();
     this.navCtrl.push(PaymentPage, {
       commonFields: commonFieldsArray,
       specificFields: specificFieldsArray,
-      offerId: this.offerId
+      offerId: this.offerId,
+      features: featuresForDatabase
     });
-    // console.log(this.features);
+    console.log(this.features);
+    console.log(featuresForDatabase);
+    console.log(this.offerForm);
+    console.log(this.offerForm.value);
   }
 
 }

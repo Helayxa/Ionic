@@ -19,11 +19,7 @@ export class OffersListPage {
   }
 
   /* Récupère la liste des offres à l'initialisation du composant */
-  ionViewDidEnter() {
-    this.offersList = this.jsonService.getOffersList();
-  }
-
-  ngOnInit() {
+  ionViewWillEnter() {
     this.offersList = this.jsonService.getOffersList();
   }
 
@@ -31,7 +27,8 @@ export class OffersListPage {
     this.navCtrl.push(OfferFormPage, {
       id: offerId,
       commonFields: this.jsonService.getCommonFieldsByOffer(offerId),
-      specificFields: this.jsonService.getSpecificFieldsByOffer(offerId)
+      specificFields: this.jsonService.getSpecificFieldsByOffer(offerId),
+      price: this.offersList[offerId].price
     });
   }
 

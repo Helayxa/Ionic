@@ -1,7 +1,9 @@
-<ion-list>
-    <ion-label color="primary">{{field?.label}} <span *ngIf="field.required">*</span></ion-label>
+<ion-list class="inputStyle" no-lines>
+  <ion-list-header>
+    <ion-label color="primary" text-wrap>{{field?.label}} <span *ngIf="field.required">*</span></ion-label>
+  </ion-list-header>
   <ion-item *ngFor='let choice of field?.params?.choices, let id = index'>
-    <ion-label>{{choice?.label}}</ion-label>
+    <ion-label text-wrap>{{choice?.label}}</ion-label>
     <ion-checkbox color="primary" [checked]="choice?.selected" (ionChange)="changeValue($event.checked, id)"></ion-checkbox>
   </ion-item>
 </ion-list>
