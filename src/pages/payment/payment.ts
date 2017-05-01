@@ -117,6 +117,8 @@ export class PaymentPage implements OnInit {
     let specificFieldsValue: any[] = this.navParams.get('specificFields');
     let offerId: number = this.navParams.get('offerId');
     let features: string = this.navParams.get('features');
+    console.log(commonFieldsValue);
+    console.log(specificFieldsValue);
     this.databaseService.createSubscription(commonFieldsValue, offerId, specificFieldsValue).then(
       success => {
         this.toastCtrl.create({

@@ -126,7 +126,7 @@ export class OfferFormPage implements OnInit {
 
   constructArrayFromObject(fields: any): any[] {
     let result: any[] = [];
-    if(fields && fields.length > 0) {
+    if(fields) {
       for(let property in fields) {
         result.push(fields[property]);
       }
@@ -162,10 +162,8 @@ export class OfferFormPage implements OnInit {
       offerId: this.offerId,
       features: featuresForDatabase
     });
-    console.log(this.features);
-    console.log(featuresForDatabase);
-    console.log(this.offerForm);
-    console.log(this.offerForm.value);
+    // console.log(this.features);
+    // console.log(featuresForDatabase);
   }
 
 }
