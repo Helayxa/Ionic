@@ -3,6 +3,8 @@ import { NavController, NavParams } from 'ionic-angular';
 
 import { Chart } from 'chart.js';
 
+import { DatabaseService } from '../../providers/database-service';
+
 /*
   Generated class for the SubscriptionList page.
 
@@ -21,15 +23,21 @@ export class SubscriptionListPage {
   private hash: string;
   private json: any;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private databaseService: DatabaseService) {
     this.hash = navParams.get('hash');
     this.json = navParams.get('json');
   }
 
+  ionViewWillEnter() {
+    this.databaseService.findAllSubscriptions(this.hash).then(data => {
+      console.log(data);
+    }).catch(error => {
+      console.log(error);
+    });
+  }
+
   ionViewDidLoad()
   {
-    console.log(this.hash);
-    console.log(this.json);
     this.paymentWayChart = new Chart(this.paymentWayCanvas.nativeElement, {
       type: 'doughnut',
       data: {

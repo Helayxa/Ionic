@@ -1,41 +1,41 @@
 <ion-header>
   <ion-navbar>
-    <ion-title>Administrateur</ion-title>
+    <ion-title>Administration</ion-title>
   </ion-navbar>
 </ion-header>
 
 
-<ion-content padding>
-  <ion-card class="card">
+<ion-content>
+
+  <ion-card>
+    <ion-card-header>
+      <ion-icon name="add" item-left></ion-icon>
+      &nbsp;Nouveau service
+    </ion-card-header>
     <ion-card-content>
-      <ion-card-title>
-        Nouveau service
-      </ion-card-title>
       <ion-item>
-        <ion-label floating>URL de téléchargement</ion-label>
+        <ion-label color="primary" floating>URL de téléchargement</ion-label>
         <ion-input type="text" [(ngModel)]="url"></ion-input>
       </ion-item>
       <ion-row>
-          <ion-col center>
-            <button ion-button icon-left (click)="downloadJson(this.url)">
-              <ion-icon name="cloud-download"></ion-icon>
-              Télécharger
-            </button>
-          </ion-col>
+        <ion-col center text-center>
+          <button ion-button (click)="downloadJson(this.url)">Télécharger</button>
+        </ion-col>
       </ion-row>
     </ion-card-content>
   </ion-card>
 
-  <ion-card class="card">
-    <ion-card-content>
-      <ion-card-title>
-        Données sauvegardées
-      </ion-card-title>
-      <ion-list>
-        <button ion-item *ngFor='let service of services' (click)='onListItemSelected(service)'>
-          {{ service.hash }}
-        </button>
-      </ion-list>
-    </ion-card-content>
+  <ion-card>
+    <ion-card-header>
+      <ion-icon name="folder-open" item-left></ion-icon>
+      &nbsp;Tous les services
+    </ion-card-header>
+    <ion-list>
+      <ion-item *ngFor='let service of services' (click)='onListItemSelected(service)'>
+        <h2>{{service?.json?.title}}</h2>
+        <h3>{{service?.hash}}</h3>
+      </ion-item>
+    </ion-list>
   </ion-card>
+
 </ion-content>
