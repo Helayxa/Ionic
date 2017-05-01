@@ -14,15 +14,46 @@
 
 
 <ion-content>
-  <ion-card>
-    <ion-card-content>
-      43
-    </ion-card-content>
-  </ion-card>
-
-  <ion-card>
-    <ion-card-content>
-      <canvas #paymentWayCanvas></canvas>
-    </ion-card-content>
-  </ion-card>
+  <ion-grid>
+      <ion-row>
+          <ion-col col-md-6>
+            <ion-card class="card-background specify-card">
+              <ion-card-content>
+                <div>
+                  <br>
+                  <h2 class="card-title">Nombre de souscription à l'offre :</h2>
+                  <br>
+                  <br>
+                  <p class="card-number">43</p>
+                </div>
+              </ion-card-content>
+            </ion-card>
+          </ion-col>
+          <ion-col col-md-6>
+            <ion-card class="specify-card">
+              <ion-card-content>
+                <canvas #paymentWayCanvas></canvas>
+              </ion-card-content>
+            </ion-card>
+          </ion-col>
+      </ion-row>
+      <ion-row>
+          <ion-col col-xs-12>
+            <ion-card>
+              <ion-card-content>
+                <canvas #subscriptionDetailsCanvas></canvas>
+              </ion-card-content>
+            </ion-card>
+          </ion-col>
+      </ion-row>
+      <ion-row>
+          <ion-col col-xs-12>
+            <ion-card>
+              <ion-card-content>
+                <canvas #tendencyCanvas></canvas>
+              </ion-card-content>
+            </ion-card>
+          </ion-col>
+      </ion-row>
+  </ion-grid>
 </ion-content>
