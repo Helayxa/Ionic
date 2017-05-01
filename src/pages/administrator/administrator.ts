@@ -1,11 +1,12 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
-import { AlertController, ToastController } from 'ionic-angular';
+import { AlertController, ToastController, LoadingController } from 'ionic-angular';
 
 import { JsonService } from '../../providers/json-service';
 import { DatabaseService } from '../../providers/database-service';
 
 import { SubscriptionListPage } from '../subscription-list/subscription-list';
+import { Md5 } from 'ts-md5/dist/md5';
 
 @Component({
   selector: 'page-administrator',
@@ -16,17 +17,34 @@ export class AdministratorPage {
 
   public url: string = "http://files.clemscode.ovh/file2.json";
 
-  constructor(public navCtrl: NavController, public toastCtrl: ToastController, public navParams: NavParams, private jsonService: JsonService, private databaseService: DatabaseService, private alertController: AlertController) {
+  public services: any[];
+
+  constructor(public navCtrl: NavController, public toastCtrl: ToastController, public loadingCtrl: LoadingController, public navParams: NavParams, private jsonService: JsonService, private databaseService: DatabaseService, private alertController: AlertController) {
 
   }
 
+  ionViewWillEnter() {
+    this.databaseService.findAllJsonFiles().then(data => {
+      this.services = data;
+    }).catch(error => {
+      console.log('Impossible de charger la liste des fichiers json');
+    });
+  }
+
   downloadJson(url: string) {
+    let loader: any = this.loadingCtrl.create({
+      content: 'Téléchargement ...'
+    });
+    loader.present();
     this.jsonService.downloadJson(url).subscribe(
       data => {
         //TODO check data validity here and show alert if not valid (don't add to database) /!\
+        let hash: string = Md5.hashStr(JSON.stringify(data)) as string;
         this.jsonService.setServiceData(data);
-        this.databaseService.saveJson(data);
+        this.jsonService.currentHash = hash;
+        this.databaseService.saveJson(hash, data);
         this.databaseService.createSubscriptionTableIfNotExists();
+        loader.dismiss();
         this.navCtrl.pop();
         this.toastCtrl.create({
           message: 'Nouveau service chargé',
@@ -34,17 +52,25 @@ export class AdministratorPage {
         }).present();
       },
       error => {
+        loader.dismiss();
         this.alertController.create({
           title: 'Erreur',
-          subTitle: 'L\'URL fournie est injoignable !',
+          subTitle: 'Erreur pendant le téléchargement',
           buttons: ['Fermer']
         }).present();
       }
     );
   }
 
+  onListItemSelected(service: any) {
+    this.navCtrl.push(SubscriptionListPage, {
+      hash: service.hash,
+      json: service.json
+    });
+  }
+
   subscriptionList() {
-    this.databaseService.findAllSubscriptions().then(data => {
+    this.databaseService.findAllSubscriptions(this.jsonService.currentHash).then(data => {
       console.log(data);
     }).catch(error => {
       console.log(error);

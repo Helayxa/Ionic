@@ -18,10 +18,18 @@ export class SubscriptionListPage {
   @ViewChild('paymentWayCanvas') paymentWayCanvas;
   paymentWayChart: any;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {}
+  private hash: string;
+  private json: any;
+
+  constructor(public navCtrl: NavController, public navParams: NavParams) {
+    this.hash = navParams.get('hash');
+    this.json = navParams.get('json');
+  }
 
   ionViewDidLoad()
   {
+    console.log(this.hash);
+    console.log(this.json);
     this.paymentWayChart = new Chart(this.paymentWayCanvas.nativeElement, {
       type: 'doughnut',
       data: {
