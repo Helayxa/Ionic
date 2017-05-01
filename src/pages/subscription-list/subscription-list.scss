@@ -7,16 +7,23 @@ page-subscription-list {
   .card-number{
     text-align: center;
     color: #FFF;
-    font-size: 72px;
+    font-size: 8em;
+    padding-top: 25%;
   }
 
   .card-title{
     color: #FFF;
     text-align: center;
+    padding-top: 5%;
   }
 
-  .specify-card{
-    height: 300px;
+  .card-one{
+    height: auto;
   }
 
+  .specific-card {
+    height: 100%;
+    padding-bottom: 0%;
+    margin-bottom: 0%;
+  }
 }

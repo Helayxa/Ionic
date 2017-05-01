@@ -30,16 +30,16 @@ export class ServicePage {
   }
 
   onSettingsButtonClicked() {
-    this.barcodeScanner.scan({
+  /*  this.barcodeScanner.scan({
       "prompt" : "Placez le QR Code dans le cadre.",
       "showTorchButton" : true,
       "showFlipCameraButton" : true
     }).then(
       barcodeData=> {
         if(barcodeData.text == "Je suis administrateur")
-        {
+        {*/
           this.navCtrl.push(AdministratorPage);
-        }
+        /*}
         else
         {
           if(barcodeData.text != "")
@@ -59,7 +59,7 @@ export class ServicePage {
           buttons: ['Fermer']
         }).present();
       }
-    );
+    );*/
   }
 
   onHwstatusButtonClicked() {

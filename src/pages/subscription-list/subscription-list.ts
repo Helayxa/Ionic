@@ -1,6 +1,6 @@
 import { Component, ViewChild } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
-
+import { DatabaseService } from '../../providers/database-service';
 import { Chart } from 'chart.js';
 
 /*
@@ -24,10 +24,14 @@ export class SubscriptionListPage {
   @ViewChild('tendencyCanvas') tendencyCanvas;
   tendencyChart: any;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {}
+  databaseInfo: Promise<any>;
+
+  constructor(public navCtrl: NavController, public navParams: NavParams, private databaseService: DatabaseService) {}
 
   ionViewDidLoad()
   {
+    this.databaseInfo = this.databaseService.findAllSubscriptions();
+    console.log("data:" + this.databaseInfo);
     this.paymentWayChart = new Chart(this.paymentWayCanvas.nativeElement, {
       type: 'doughnut',
       data: {
