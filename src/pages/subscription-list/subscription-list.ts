@@ -3,7 +3,6 @@ import { NavController, NavParams } from 'ionic-angular';
 import { DatabaseService } from '../../providers/database-service';
 import { Chart } from 'chart.js';
 
-import { DatabaseService } from '../../providers/database-service';
 
 /*
   Generated class for the SubscriptionList page.
@@ -28,18 +27,75 @@ export class SubscriptionListPage {
 
   private hash: string;
   private json: any;
-  private databaseInfo: Promise<any>;
+
+  public nbSouscription: number;
+  public n_offersArray: number[];
+  public s_offersArray: String[];
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private databaseService: DatabaseService) {
     this.hash = navParams.get('hash');
     this.json = navParams.get('json');
+    this.s_offersArray = [];
+    this.n_offersArray = [];
   }
 
   ionViewWillEnter() {
+    for(let i=0; i<this.json.offers.length; i++){
+      this.s_offersArray[i] = this.json.offers[i].title;
+      this.n_offersArray[i] = 0;
+    }
+
     this.databaseService.findAllSubscriptions(this.hash).then(data => {
-      console.log(data);
+      this.nbSouscription = data.length;
+      for(let i=0; i<data.length; i++){
+        this.n_offersArray[data[i].offerId] += 1;
+      }
+      this.generateDetailsChart();
     }).catch(error => {
       console.log(error);
+    });
+  }
+
+  generateDetailsChart(): void{
+    this.suscriptionDetailsChart = new Chart(this.subscriptionDetailsCanvas.nativeElement, {
+      type: 'horizontalBar',
+      data: {
+        labels: this.s_offersArray,
+        datasets: [{
+          data: this.n_offersArray,
+          backgroundColor: [
+            'rgba(255, 99, 132, 0.2)',
+            'rgba(54, 162, 235, 0.2)',
+            'rgba(255, 206, 86, 0.2)',
+            'rgba(75, 192, 192, 0.2)'
+          ],
+          hoverBackgroundColor: [
+            'rgba(255,99,132,1)',
+            'rgba(54, 162, 235, 1)',
+            'rgba(255, 206, 86, 1)',
+            'rgba(75, 192, 192, 1)'
+          ]
+        }]
+      },
+      options: {
+        scales: {
+          xAxes: [{
+            ticks: {
+              beginAtZero: true,
+              stepSize: 1
+            }
+          }]
+        },
+        title:{
+          display: true,
+          text: 'Nombre de souscription par offre'
+        },
+        legend:{
+          display: false
+        },
+        responsive: true,
+        maintainAspectRatio: false
+      }
     });
   }
 
@@ -67,40 +123,6 @@ export class SubscriptionListPage {
       options: {
         legend: {
           position: 'bottom'
-        }
-      }
-    });
-    this.suscriptionDetailsChart = new Chart(this.subscriptionDetailsCanvas.nativeElement, {
-      type: 'bar',
-      data: {
-        labels: ['Offre 1', 'Offre 2', 'Offre 3', 'Offre 4'],
-        datasets: [{
-          label: 'Nombre de suscription par offre',
-          data: [10, 50, 25, 15],
-          backgroundColor: [
-            'rgba(255, 99, 132, 0.2)',
-            'rgba(54, 162, 235, 0.2)',
-            'rgba(255, 206, 86, 0.2)',
-            'rgba(75, 192, 192, 0.2)'
-          ],
-          hoverBackgroundColor: [
-            'rgba(255,99,132,1)',
-            'rgba(54, 162, 235, 1)',
-            'rgba(255, 206, 86, 1)',
-            'rgba(75, 192, 192, 1)'
-          ]
-        }]
-      },
-      options: {
-        legend: {
-          position: 'bottom'
-        },
-        scales: {
-          yAxes: [{
-            ticks: {
-              beginAtZero: true
-            }
-          }]
         }
       }
     });

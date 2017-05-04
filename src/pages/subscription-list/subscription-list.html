@@ -21,7 +21,7 @@
               <ion-card-content>
                 <div>
                   <h2 class="card-title">Nombre de souscription à l'offre :</h2>
-                  <p class="card-number">43</p>
+                  <p class="card-number">{{this.nbSouscription}}</p>
                 </div>
               </ion-card-content>
             </ion-card>
@@ -35,7 +35,7 @@
           </ion-col>
       </ion-row>
       <ion-row>
-          <ion-col col-xs-12>
+          <ion-col col-xs-12 class="details-card">
             <ion-card>
               <ion-card-content>
                 <canvas #subscriptionDetailsCanvas></canvas>
