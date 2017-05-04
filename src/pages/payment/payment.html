@@ -23,8 +23,8 @@
                     </ion-list>
                 </ion-grid>
                 <!-- AFFICHAGE CREDIT CARD  -->
-                <ion-card *ngIf="globalForm.value['radioPayment'] === 'creditCard'">
-                  <div formGroupName="creditCardForm">
+                <ion-card>
+                  
                     <ion-card-header class="header">
                       <ion-row>
                         <ion-col>
@@ -36,6 +36,7 @@
                       </ion-row>
                     </ion-card-header>
                     <ion-card-content>
+                      <div *ngIf="globalForm.value['radioPayment'] === 'creditCard'" formGroupName="creditCardForm">
                         <ion-row>
                             <ion-col col-12>
                                 <ion-item>
@@ -95,102 +96,65 @@
                                   <p class="error-message">{{getErrorMessage(globalForm.controls['creditCardForm']?.controls['cardCVC']?.errors)}}</p>
                                 </ion-item>
                             </ion-col>
-                        </ion-row>
+                          </ion-row>
+                        </div>
+                        <div *ngIf="globalForm.value['radioPayment'] === 'paypal'" formGroupName="paypalForm">
+                          <ion-row>
+                              <ion-col col-12>
+                                  <ion-item>
+                                    <ion-label color="dark" stacked>NUMERO COMPTE PAYPAL *</ion-label>
+                                    <ion-input class="inputStyle"
+                                              formControlName="numPaypal"
+                                              type="number"
+                                              >
+                                    </ion-input>
+                                  </ion-item>
+                                  <ion-item class="error-message-container" *ngIf="globalForm.controls['paypalForm']?.controls['numPaypal']?.errors && globalForm.controls['paypalForm']?.controls['numPaypal']?.touched">
+                                    <p class="error-message">{{getErrorMessage(globalForm.controls['paypalForm']?.controls['numPaypal']?.errors)}}</p>
+                                  </ion-item>
+                              </ion-col>
+                          </ion-row>
+                        </div>
+                          <!-- AFFICHAGE BANK TRANSFER -->
+                        <div *ngIf="globalForm.value['radioPayment'] === 'bankTransfer'" formGroupName="bankForm">
+                          <ion-row>
+                              <ion-col col-12>
+                                  <ion-item>
+                                    <ion-label color="dark" stacked>BIC *</ion-label>
+                                    <ion-input class="inputStyle"
+                                              type="text"
+                                              formControlName="bic"
+                                              >
+                                    </ion-input>
+                                  </ion-item>
+                                  <ion-item class="error-message-container" *ngIf="globalForm.controls['bankForm']?.controls['bic']?.errors && globalForm.controls['bankForm']?.controls['bic']?.touched">
+                                    <p class="error-message">{{getErrorMessage(globalForm.controls['bankForm']?.controls['bic']?.errors)}}</p>
+                                  </ion-item>
+                              </ion-col>
+                          </ion-row>
+                          <ion-row>
+                              <ion-col col-12>
+                                  <ion-item>
+                                    <ion-label color="dark" stacked>IBAN *</ion-label>
+                                    <ion-input class="inputStyle"
+                                              formControlName="iban"
+                                              type="text"
+                                              >
+                                    </ion-input>
+                                  </ion-item>
+                                  <ion-item class="error-message-container" *ngIf="globalForm.controls['bankForm']?.controls['iban']?.errors && globalForm.controls['bankForm']?.controls['iban']?.touched">
+                                    <p class="error-message">{{getErrorMessage(globalForm.controls['bankForm']?.controls['iban']?.errors)}}</p>
+                                  </ion-item>
+                              </ion-col>
+                          </ion-row>
+                        </div>
                         <ion-row>
                           <ion-col center text-center>
                             <button color="secondary" ion-button type="submit"  [disabled]='!globalForm.valid'>Valider</button>
                           </ion-col>
                         </ion-row>
                       </ion-card-content>
-                    </div>
-                  </ion-card>
-                  <ion-card *ngIf="globalForm.value['radioPayment'] === 'paypal'">
-                    <div formGroupName="paypalForm">
-                      <ion-card-header class="header">
-                        <ion-row>
-                          <ion-col>
-                            <h2>Détails du paiement</h2>
-                          </ion-col>
-                          <ion-col>
-                            <img src="http://i76.imgup.net/accepted_c22e0.png">
-                          </ion-col>
-                        </ion-row>
-                      </ion-card-header>
-                      <ion-card-content>
-                        <ion-row>
-                            <ion-col col-12>
-                                <ion-item>
-                                  <ion-label color="dark" stacked>NUMERO COMPTE PAYPAL *</ion-label>
-                                  <ion-input class="inputStyle"
-                                            formControlName="numPaypal"
-                                            type="number"
-                                            >
-                                 </ion-input>
-                                </ion-item>
-                                <ion-item class="error-message-container" *ngIf="globalForm.controls['paypalForm']?.controls['numPaypal']?.errors && globalForm.controls['paypalForm']?.controls['numPaypal']?.touched">
-                                  <p class="error-message">{{getErrorMessage(globalForm.controls['paypalForm']?.controls['numPaypal']?.errors)}}</p>
-                                </ion-item>
-                            </ion-col>
-                        </ion-row>
-                        <ion-row>
-                          <ion-col center text-center>
-                            <button color="secondary" ion-button type="submit"  [disabled]='!globalForm.valid'>Valider</button>
-                          </ion-col>
-                        </ion-row>
-                      </ion-card-content>
-                    </div>
-                  </ion-card>
-                      <!-- AFFICHAGE BANK TRANSFER -->
-                  <ion-card *ngIf="globalForm.value['radioPayment'] === 'bankTransfer'">
-                    <div formGroupName="bankForm">
-                      <ion-card-header class="header">
-                        <ion-row>
-                          <ion-col>
-                            <h2>Détails du paiement</h2>
-                          </ion-col>
-                          <ion-col>
-                            <img src="http://i76.imgup.net/accepted_c22e0.png">
-                          </ion-col>
-                        </ion-row>
-                      </ion-card-header>
-                      <ion-card-content>
-                        <ion-row>
-                            <ion-col col-12>
-                                <ion-item>
-                                  <ion-label color="dark" stacked>BIC *</ion-label>
-                                  <ion-input class="inputStyle"
-                                            type="text"
-                                            formControlName="bic"
-                                            >
-                                 </ion-input>
-                                </ion-item>
-                                <ion-item class="error-message-container" *ngIf="globalForm.controls['bankForm']?.controls['bic']?.errors && globalForm.controls['bankForm']?.controls['bic']?.touched">
-                                  <p class="error-message">{{getErrorMessage(globalForm.controls['bankForm']?.controls['bic']?.errors)}}</p>
-                                </ion-item>
-                            </ion-col>
-                        </ion-row>
-                        <ion-row>
-                            <ion-col col-12>
-                                <ion-item>
-                                  <ion-label color="dark" stacked>IBAN *</ion-label>
-                                  <ion-input class="inputStyle"
-                                            formControlName="iban"
-                                            type="text"
-                                            >
-                                 </ion-input>
-                                </ion-item>
-                                <ion-item class="error-message-container" *ngIf="globalForm.controls['bankForm']?.controls['iban']?.errors && globalForm.controls['bankForm']?.controls['iban']?.touched">
-                                  <p class="error-message">{{getErrorMessage(globalForm.controls['bankForm']?.controls['iban']?.errors)}}</p>
-                                </ion-item>
-                            </ion-col>
-                        </ion-row>
-                        <ion-row>
-                          <ion-col center text-center>
-                            <button color="secondary" ion-button type="submit" [disabled]='!globalForm.valid'>Valider</button>
-                          </ion-col>
-                        </ion-row>
-                      </ion-card-content>
-                    </div>
+                    
                   </ion-card>
                 </form>
             </ion-col>
