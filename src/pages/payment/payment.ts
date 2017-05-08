@@ -117,9 +117,9 @@ export class PaymentPage implements OnInit {
     let specificFieldsValue: any[] = this.navParams.get('specificFields');
     let offerId: number = this.navParams.get('offerId');
     let features: string = this.navParams.get('features');
-    console.log(commonFieldsValue);
-    console.log(specificFieldsValue);
-    this.databaseService.createSubscription(commonFieldsValue, offerId, specificFieldsValue).then(
+    let price: number = this.navParams.get('price');
+    let paymentWay: string = this.globalForm.get('radioPayment').value;
+    this.databaseService.createSubscription(commonFieldsValue, offerId, specificFieldsValue, features, price, paymentWay).then(
       success => {
         this.toastCtrl.create({
           message: 'Votre inscription a bien été prise en compte !',

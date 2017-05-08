@@ -33,6 +33,7 @@
     <ion-list>
       <ion-item *ngFor='let service of services' (click)='onListItemSelected(service)'>
         <h2>{{service?.json?.title}}</h2>
+        <h3>{{service?.hash}}</h3>
       </ion-item>
     </ion-list>
   </ion-card>
