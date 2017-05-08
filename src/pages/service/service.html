@@ -1,7 +1,7 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>{{this.jsonService.getServiceData()?.title}}</ion-title>
+    <ion-title>{{this.jsonService.getServiceData()?.title ? this.jsonService.getServiceData()?.title : 'Aucun service'}}</ion-title>
 
     <ion-buttons end>
       <button ion-button icon-only (click)="onHwstatusButtonClicked()">
