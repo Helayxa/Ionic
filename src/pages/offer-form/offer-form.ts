@@ -160,7 +160,8 @@ export class OfferFormPage implements OnInit {
       commonFields: commonFieldsArray,
       specificFields: specificFieldsArray,
       offerId: this.offerId,
-      features: featuresForDatabase
+      features: featuresForDatabase,
+      price: this.price
     });
     // console.log(this.features);
     // console.log(featuresForDatabase);

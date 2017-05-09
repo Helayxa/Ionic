@@ -80,6 +80,20 @@ export class DatabaseService {
     });
   }
 
+  getJson(hash: string) : Promise<any> {
+    return new Promise((resolve, reject) => {
+      this.queryJsonRepository('select * from service where hash=?', [hash]).then(data => {
+        if(data.rows.length > 0) {
+          resolve(data.rows.item(0).json);
+        } else {
+          reject("Aucun JSON ne porte ce hash");
+        }
+      }).catch(error => {
+        reject(error);
+      });
+    });
+  }
+
   saveJson(hash: string, json: any) {
     this.queryJsonRepository("insert into service(hash, json) values(?, ?)", [hash, JSON.stringify(json)]).then(data => {
       console.log("Json inséré dans la base de données");
@@ -160,6 +174,9 @@ export class DatabaseService {
         cols.push(col);
       }
     }
+    cols.push('features TEXT');
+    cols.push('price REAL');
+    cols.push('paymentWay TEXT');
     query += cols.join(',') + ');';
     return query;
   }
@@ -183,22 +200,79 @@ export class DatabaseService {
   findAllSubscriptions(hash: string) : Promise<any> {
     return new Promise((resolve, reject) => {
       this.queryServiceDatabase('select * from subscription;', [], hash).then(data => {
-        if(data.rows.length > 0) {
-          let result: any[] = [];
-          for(let i=0; i<data.rows.length; i++) {
-            result.push(data.rows.item(i));
+        this.getJson(hash).then(jsonstr => {
+          if(data.rows.length > 0) {
+            let json: any = JSON.parse(jsonstr);
+            let subscriptions: any[] = [];
+            for(let i=0; i<data.rows.length; i++) {
+              let raw: any = data.rows.item(i);
+              let subscription: any = {};
+
+              //Bloc 'selectedOffer'
+              let selectedOffer: any = {};
+              selectedOffer.id = raw.offerId;
+              selectedOffer.name = json.offers[raw.offerId].title;
+              subscription.selectedOffer = selectedOffer;
+
+              //Bloc 'commonFields'
+              let commonFields: any[] = [];
+              for(let field of json.commonFields) {
+                let commonField: any = {};
+                commonField.name = field.label;
+                commonField.value = raw[field.fieldId];
+                commonFields.push(commonField);
+              }
+              subscription.commonFields = commonFields;
+
+              //Bloc 'specificFields'
+              let specificFields: any[] = [];
+              if(json.offers[raw.offerId].specificFields) {
+                for(let field of json.offers[raw.offerId].specificFields) {
+                  let specificField: any = {};
+                  specificField.name = field.label;
+                  specificField.value = raw[field.fieldId];
+                  specificFields.push(specificField);
+                }
+              }
+              subscription.specificFields = specificFields;
+
+              //Bloc 'selectedFeatures'
+              let selectedFeatures: any[] = [];
+              for(let featureId of raw.features.split(',').map( Number )) {
+                if(json.offers[raw.offerId].features[featureId]) {
+                    let feature: any = json.offers[raw.offerId].features[featureId];
+                    let selectedFeature: any = {};
+                    selectedFeature.id = featureId;
+                    selectedFeature.name = feature.title;
+                    selectedFeature.price = feature.price;
+                    selectedFeatures.push(selectedFeature);
+                }
+              }
+              subscription.selectedFeatures = selectedFeatures;
+
+              //Price paid
+              subscription.pricePaid = raw.price;
+
+              //paymentWay
+              subscription.paymentWay = raw.paymentWay;
+
+              subscriptions.push(subscription);
+            }
+
+            resolve(subscriptions);
+          } else {
+            resolve([]);
           }
-          resolve(result);
-        } else {
-          resolve([]);
-        }
+        }).catch(error => {
+          reject(error);
+        });
       }).catch(error => {
         reject(error);
       });
     });
   }
 
-  createSubscription(commonFieldsValues: any[], offerId: number, specificFieldsValues: any[]) : Promise<any> {
+  createSubscription(commonFieldsValues: any[], offerId: number, specificFieldsValues: any[], features: string, price: number, paymentWay: string) : Promise<any> {
     console.log("CommonFields : ", commonFieldsValues);
     console.log("ID offre : ", offerId);
     console.log("SpecificFields : ", specificFieldsValues);
@@ -212,10 +286,16 @@ export class DatabaseService {
     for(let field of this.jsonService.getSpecificFieldsByOffer(offerId)) {
       fieldsToFill.push(field.fieldId);
     }
+    fieldsToFill.push('features');
+    fieldsToFill.push('price');
+    fieldsToFill.push('paymentWay');
     query += fieldsToFill.join(',') + ') values(' + this.createQuestionMarkList(fieldsToFill.length) + ');';
     values = values.concat(commonFieldsValues);
     values.push(offerId);
     values = values.concat(specificFieldsValues);
+    values.push(features);
+    values.push(price);
+    values.push(paymentWay);
     console.log(query);
     return this.queryServiceDatabase(query, values);
   }
