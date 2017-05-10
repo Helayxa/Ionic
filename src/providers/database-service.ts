@@ -239,7 +239,7 @@ export class DatabaseService {
               //Bloc 'selectedFeatures'
               let selectedFeatures: any[] = [];
               for(let featureId of raw.features.split(',').map( Number )) {
-                if(json.offers[raw.offerId].features[featureId]) {
+                if(json.offers[raw.offerId].features && json.offers[raw.offerId].features[featureId]){
                     let feature: any = json.offers[raw.offerId].features[featureId];
                     let selectedFeature: any = {};
                     selectedFeature.id = featureId;
