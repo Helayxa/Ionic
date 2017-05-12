@@ -1,6 +1,7 @@
 import { Component, ViewChild } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
+import { NavController, NavParams, ToastController } from 'ionic-angular';
 import { DatabaseService } from '../../providers/database-service';
+import { JsonService } from '../../providers/json-service';
 import { Chart } from 'chart.js';
 
 
@@ -27,6 +28,7 @@ export class SubscriptionListPage {
 
   private hash: string;
   private json: any;
+  private subs: any;
 
   public nbSouscription: number;
   public totalPaid: number;
@@ -36,7 +38,7 @@ export class SubscriptionListPage {
   public n_paymentWayArray: number[];
   public s_paymentWayArray: String[];
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private databaseService: DatabaseService) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private databaseService: DatabaseService, private jsonService: JsonService, public toastCtrl: ToastController) {
     this.hash = navParams.get('hash');
     this.json = navParams.get('json');
     this.s_offersArray = [];
@@ -201,4 +203,19 @@ export class SubscriptionListPage {
     });
   }
 
+  exportAllSubscriptions(): void{
+    this.databaseService.findAllSubscriptions(this.hash).then(data => {
+      console.log("*************************** Version String ***************************");
+      console.log(JSON.stringify(data));
+
+      this.toastCtrl.create({
+        message: 'Données enregistrées dans le fichier',
+        duration: 2000
+      }).present();
+    }).catch(error => {
+      console.log(error);
+    });
+
+
+  }
 }

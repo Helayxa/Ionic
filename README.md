@@ -9,3 +9,6 @@ SQLite :
 CPU/RAM :
 ionic plugin add cordova-plugin-chrome-apps-system-cpu
 ionic plugin add cordova-plugin-chrome-apps-system-memory
+
+Barcode Scanner :
+ionic plugin add phonegap-plugin-barcodescanner

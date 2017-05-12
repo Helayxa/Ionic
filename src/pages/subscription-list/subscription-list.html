@@ -8,8 +8,13 @@
 
   <ion-navbar>
     <ion-title>Liste des souscriptions</ion-title>
-  </ion-navbar>
 
+    <ion-buttons end>
+      <button ion-button icon-only (click)="exportAllSubscriptions()">
+        <ion-icon name="download"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
 </ion-header>
 
 
