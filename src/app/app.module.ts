@@ -11,6 +11,7 @@ import { SubscriptionListPage } from '../pages/subscription-list/subscription-li
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner';
+import { File } from '@ionic-native/file';
 
 import { JsonService } from '../providers/json-service';
 import { DatabaseService } from '../providers/database-service';
@@ -51,6 +52,7 @@ import { ProgressbarComponent } from '../components/progressbar/progressbar';
     JsonService,
     DatabaseService,
     BarcodeScanner,
+    File,
     {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]
 })

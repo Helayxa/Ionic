@@ -36,7 +36,7 @@ export class ServicePage {
       "showFlipCameraButton" : true
     }).then(
       barcodeData=> {
-        if(barcodeData.text == "Je suis administrateur")
+        if(barcodeData.text == "4uV4Ytr9b2N73JqW7eah6sVA3v589s58zSHXGDQY6Jzr57mfmF")
         {
           this.navCtrl.push(AdministratorPage);
         }

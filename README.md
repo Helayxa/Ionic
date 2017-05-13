@@ -12,3 +12,6 @@ ionic plugin add cordova-plugin-chrome-apps-system-memory
 
 Barcode Scanner :
 ionic plugin add phonegap-plugin-barcodescanner
+
+File :
+ionic plugin add cordova-plugin-file

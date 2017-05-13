@@ -1,9 +1,9 @@
 import { Component, ViewChild } from '@angular/core';
+import { File } from '@ionic-native/file';
 import { NavController, NavParams, ToastController } from 'ionic-angular';
 import { DatabaseService } from '../../providers/database-service';
 import { JsonService } from '../../providers/json-service';
 import { Chart } from 'chart.js';
-
 
 /*
   Generated class for the SubscriptionList page.
@@ -28,7 +28,6 @@ export class SubscriptionListPage {
 
   private hash: string;
   private json: any;
-  private subs: any;
 
   public nbSouscription: number;
   public totalPaid: number;
@@ -38,7 +37,7 @@ export class SubscriptionListPage {
   public n_paymentWayArray: number[];
   public s_paymentWayArray: String[];
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private databaseService: DatabaseService, private jsonService: JsonService, public toastCtrl: ToastController) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private databaseService: DatabaseService, private jsonService: JsonService, public toastCtrl: ToastController, private file: File) {
     this.hash = navParams.get('hash');
     this.json = navParams.get('json');
     this.s_offersArray = [];
@@ -205,17 +204,22 @@ export class SubscriptionListPage {
 
   exportAllSubscriptions(): void{
     this.databaseService.findAllSubscriptions(this.hash).then(data => {
-      console.log("*************************** Version String ***************************");
+      console.log("*************************** Enregistrement dans fichier ***************************");
       console.log(JSON.stringify(data));
 
+      this.file.writeFile(this.file.externalRootDirectory + "Documents/", Date.now() + ".json", JSON.stringify(data), true)
+      .then(
+        ok => console.log('Fichier créé : ' + this.file.externalRootDirectory + "Documents/")
+      ).catch(
+        err => console.log('Erreur de création du fichier')
+      );
+
       this.toastCtrl.create({
-        message: 'Données enregistrées dans le fichier',
+        message: 'Fichier enregistré dans les documents',
         duration: 2000
       }).present();
     }).catch(error => {
       console.log(error);
     });
-
-
   }
 }
