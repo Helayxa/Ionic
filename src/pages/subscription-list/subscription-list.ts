@@ -1,16 +1,10 @@
 import { Component, ViewChild } from '@angular/core';
 import { File } from '@ionic-native/file';
-import { NavController, NavParams, ToastController } from 'ionic-angular';
+import { NavController, NavParams, ToastController, AlertController } from 'ionic-angular';
 import { DatabaseService } from '../../providers/database-service';
 import { JsonService } from '../../providers/json-service';
 import { Chart } from 'chart.js';
 
-/*
-  Generated class for the SubscriptionList page.
-
-  See http://ionicframework.com/docs/v2/components/#navigation for more info on
-  Ionic pages and navigation.
-*/
 @Component({
   selector: 'page-subscription-list',
   templateUrl: 'subscription-list.html'
@@ -32,12 +26,12 @@ export class SubscriptionListPage {
   public nbSouscription: number;
   public totalPaid: number;
   public n_offersArray: number[];
-  public s_offersArray: String[];
+  public s_offersArray: string[];
   public n_pricePaidArray: number[];
   public n_paymentWayArray: number[];
-  public s_paymentWayArray: String[];
+  public s_paymentWayArray: string[];
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private databaseService: DatabaseService, private jsonService: JsonService, public toastCtrl: ToastController, private file: File) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private databaseService: DatabaseService, private jsonService: JsonService, public toastCtrl: ToastController, private file: File, private alertCtrl: AlertController) {
     this.hash = navParams.get('hash');
     this.json = navParams.get('json');
     this.s_offersArray = [];
@@ -64,14 +58,27 @@ export class SubscriptionListPage {
         this.n_offersArray[data[i].selectedOffer.id] += 1;
         this.n_pricePaidArray[data[i].selectedOffer.id] += data[i].pricePaid;
         this.totalPaid += data[i].pricePaid;
-        this.n_paymentWayArray[data[i].selectedOffer.id] += 1;
+        let paymentWayId = this.findPaymentWayId(data[i].paymentWay);
+        if(paymentWayId !== -1) {
+          this.n_paymentWayArray[paymentWayId] += 1;
+        }
       }
+      console.log(this.n_paymentWayArray);
       this.generateDetailsChart();
       this.generateMoneybyOffersChart();
       this.generatePaymentWayChart();
     }).catch(error => {
       console.log(error);
     });
+  }
+
+  findPaymentWayId(paymentWay: string): number {
+    for(let i = 0; i < this.s_paymentWayArray.length; i++) {
+      if(this.s_paymentWayArray[i] === paymentWay) {
+        return i;
+      }
+    }
+    return -1;
   }
 
   generateDetailsChart(): void{
@@ -205,20 +212,32 @@ export class SubscriptionListPage {
   exportAllSubscriptions(): void{
     this.databaseService.findAllSubscriptions(this.hash).then(data => {
       console.log("*************************** Enregistrement dans fichier ***************************");
-      console.log(JSON.stringify(data));
 
       this.file.writeFile(this.file.externalRootDirectory + "Documents/", Date.now() + ".json", JSON.stringify(data), true)
       .then(
-        ok => console.log('Fichier créé : ' + this.file.externalRootDirectory + "Documents/")
+        ok => {
+          console.log('Fichier créé : ' + this.file.externalRootDirectory + "Documents/");
+          this.toastCtrl.create({
+            message: 'Fichier enregistré dans les documents',
+            duration: 2000
+          }).present();
+        }
       ).catch(
-        err => console.log('Erreur de création du fichier')
+        err => {
+          console.log('Erreur de création du fichier');
+          this.alertCtrl.create({
+            title: 'Création fichier',
+            subTitle: 'Impossible de créer le fichier d\'export',
+            buttons: ['Fermer']
+          }).present();
+        }
       );
-
-      this.toastCtrl.create({
-        message: 'Fichier enregistré dans les documents',
-        duration: 2000
-      }).present();
     }).catch(error => {
+      this.alertCtrl.create({
+        title: 'Récupération données',
+        subTitle: 'Impossible de récupérer les données de la base',
+        buttons: ['Fermer']
+      }).present();
       console.log(error);
     });
   }
