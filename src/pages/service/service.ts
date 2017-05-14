@@ -21,7 +21,6 @@ export class ServicePage {
   }
 
   ionViewWillEnter(): void {
-    console.log("ici");
     this.service = this.jsonService.getServiceData();
   }
 

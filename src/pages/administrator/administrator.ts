@@ -15,7 +15,7 @@ import { Md5 } from 'ts-md5/dist/md5';
 
 export class AdministratorPage {
 
-  public url: string = 'http://files.clemscode.ovh/file2.json';
+  public url: string = 'http://files.clemscode.ovh/service_cordova.json';
 
   public services: any[];
 

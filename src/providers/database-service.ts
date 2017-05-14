@@ -217,10 +217,12 @@ export class DatabaseService {
               //Bloc 'commonFields'
               let commonFields: any[] = [];
               for(let field of json.commonFields) {
-                let commonField: any = {};
-                commonField.name = field.label;
-                commonField.value = raw[field.fieldId];
-                commonFields.push(commonField);
+                if(raw[field.fieldId]) {
+                  let commonField: any = {};
+                  commonField.name = field.label;
+                  commonField.value = raw[field.fieldId];
+                  commonFields.push(commonField);
+                }
               }
               subscription.commonFields = commonFields;
 
@@ -228,10 +230,12 @@ export class DatabaseService {
               let specificFields: any[] = [];
               if(json.offers[raw.offerId].specificFields) {
                 for(let field of json.offers[raw.offerId].specificFields) {
-                  let specificField: any = {};
-                  specificField.name = field.label;
-                  specificField.value = raw[field.fieldId];
-                  specificFields.push(specificField);
+                  if(raw[field.fieldId]) {
+                    let specificField: any = {};
+                    specificField.name = field.label;
+                    specificField.value = raw[field.fieldId];
+                    specificFields.push(specificField);
+                  }
                 }
               }
               subscription.specificFields = specificFields;

@@ -213,12 +213,12 @@ export class SubscriptionListPage {
     this.databaseService.findAllSubscriptions(this.hash).then(data => {
       console.log("*************************** Enregistrement dans fichier ***************************");
 
-      this.file.writeFile(this.file.externalRootDirectory + "Documents/", Date.now() + ".json", JSON.stringify(data), true)
+      this.file.writeFile(this.file.externalRootDirectory, Date.now() + ".json", JSON.stringify(data), true)
       .then(
         ok => {
-          console.log('Fichier créé : ' + this.file.externalRootDirectory + "Documents/");
+          console.log('Fichier créé : ' + this.file.externalRootDirectory);
           this.toastCtrl.create({
-            message: 'Fichier enregistré dans les documents',
+            message: 'Fichier enregistré dans le dossier racine de la mémoire du téléphone.',
             duration: 2000
           }).present();
         }

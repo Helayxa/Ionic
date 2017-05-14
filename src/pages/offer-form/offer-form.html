@@ -28,7 +28,7 @@
                         <div *ngSwitchCase="'text'" [formGroupName]="field.formGroupName">
                           <ion-item>
                             <ion-label color="primary" stacked>{{field?.label}} <span *ngIf="field.required">*</span></ion-label>
-                            <ion-input [placeholder]="field.params?.placeholder" [formControlName]="field?.fieldId" class="inputStyle"></ion-input>
+                            <ion-input placeholder="{{field.params?.placeholder ? field.params?.placeholder : ''}}" [formControlName]="field?.fieldId" class="inputStyle"></ion-input>
                           </ion-item>
                           <ion-item class="error-message-container" *ngIf="offerForm.controls[field.formGroupName]?.controls[field?.fieldId]?.errors && offerForm.controls[field.formGroupName]?.controls[field?.fieldId]?.touched">
                             <p class="error-message">{{getErrorMessage(offerForm.controls[field.formGroupName]?.controls[field?.fieldId]?.errors)}}</p>
@@ -53,7 +53,7 @@
                             pickerFormat="DD/MMMM/YYYY"
                             cancelText="Annuler"
                             doneText="Valider"
-                            [placeholder]="field.params?.placeholder"
+                            placeholder="{{field.params?.placeholder ? field.params?.placeholder : ''}}"
                             [monthNames]="frenchMonth"
                             [min]="field?.params?.minDate"
                             [max]="field?.params?.maxDate"
@@ -87,7 +87,7 @@
                             <ion-select
                             cancelText="Annuler"
                             okText = "Valider"
-                            [placeholder]="field.params?.placeholder"
+                            placeholder="{{field.params?.placeholder ? field.params?.placeholder : ''}}"
                             [formControlName]="field?.fieldId">
                               <ion-option *ngFor='let choice of field?.params?.choices' [value]="choice?.value" [selected]="choice?.selected">{{choice?.label}}</ion-option>
                             </ion-select>
