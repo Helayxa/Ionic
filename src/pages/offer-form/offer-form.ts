@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Validators, FormBuilder, FormGroup } from '@angular/forms';
 import { NavController, NavParams } from 'ionic-angular';
 
@@ -11,7 +11,7 @@ import { DatabaseService } from '../../providers/database-service';
   selector: 'page-offer-form',
   templateUrl: 'offer-form.html'
 })
-export class OfferFormPage implements OnInit {
+export class OfferFormPage implements OnInit, OnDestroy {
 
   private offerId: number;
   private commonFields: any[];
@@ -41,6 +41,12 @@ export class OfferFormPage implements OnInit {
     this.features = this.jsonService.getFeaturesByOffer(this.offerId);
     this.constructFields();
     this.generateFormControls();
+  }
+
+  ngOnDestroy(): void {
+    for(let i = 0; i < this.features.length; i++) {
+      this.features[i].selected = false;
+    }
   }
 
   constructFields(): void {
@@ -163,8 +169,6 @@ export class OfferFormPage implements OnInit {
       features: featuresForDatabase,
       price: this.price
     });
-    // console.log(this.features);
-    // console.log(featuresForDatabase);
   }
 
 }

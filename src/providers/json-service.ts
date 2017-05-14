@@ -113,7 +113,7 @@ export class JsonService {
   }
 
   getFeaturesByOffer(offerId: number): any[] {
-    let features: any[] = []
+    let features: any[] = [];
     if(this.offersList && this.offersList[offerId] && this.offersList[offerId].features) {
       features = this.offersList[offerId].features;
     }

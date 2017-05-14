@@ -11,24 +11,20 @@ page-subscription-list {
   .card-number{
     text-align: center;
     color: #FFF;
-    font-size: 8em;
-    padding-top: 25%;
+    font-size: 4em;
+    margin-top: 10%;
   }
 
   .card-title{
     color: #FFF;
     text-align: center;
-    padding-top: 5%;
-  }
-
-  .card-one{
-    height: auto;
+    margin-top: 5%;
   }
 
   .specific-card {
     height: 100%;
     padding-bottom: 0%;
-    margin-bottom: 0%;
+    // margin-bottom: 0%;
   }
 
 }

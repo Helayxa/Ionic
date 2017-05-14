@@ -242,14 +242,16 @@ export class DatabaseService {
 
               //Bloc 'selectedFeatures'
               let selectedFeatures: any[] = [];
-              for(let featureId of raw.features.split(',').map( Number )) {
-                if(json.offers[raw.offerId].features && json.offers[raw.offerId].features[featureId]){
-                    let feature: any = json.offers[raw.offerId].features[featureId];
-                    let selectedFeature: any = {};
-                    selectedFeature.id = featureId;
-                    selectedFeature.name = feature.title;
-                    selectedFeature.price = feature.price;
-                    selectedFeatures.push(selectedFeature);
+              if(raw.features) {
+                for(let featureId of raw.features.split(',').map( Number )) {
+                  if(json.offers[raw.offerId].features && json.offers[raw.offerId].features[featureId]){
+                      let feature: any = json.offers[raw.offerId].features[featureId];
+                      let selectedFeature: any = {};
+                      selectedFeature.id = featureId;
+                      selectedFeature.name = feature.title;
+                      selectedFeature.price = feature.price;
+                      selectedFeatures.push(selectedFeature);
+                  }
                 }
               }
               subscription.selectedFeatures = selectedFeatures;
@@ -290,16 +292,21 @@ export class DatabaseService {
     for(let field of this.jsonService.getSpecificFieldsByOffer(offerId)) {
       fieldsToFill.push(field.fieldId);
     }
-    fieldsToFill.push('features');
+    if(features) {
+      fieldsToFill.push('features');
+    }
     fieldsToFill.push('price');
     fieldsToFill.push('paymentWay');
     query += fieldsToFill.join(',') + ') values(' + this.createQuestionMarkList(fieldsToFill.length) + ');';
     values = values.concat(commonFieldsValues);
     values.push(offerId);
     values = values.concat(specificFieldsValues);
-    values.push(features);
+    if(features) {
+      values.push(features);
+    }
     values.push(price);
     values.push(paymentWay);
+    console.log(values);
     console.log(query);
     return this.queryServiceDatabase(query, values);
   }

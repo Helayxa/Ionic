@@ -15,23 +15,21 @@
 <ion-content>
   <ion-grid>
       <ion-row>
-          <ion-col col-md-6>
+          <ion-col col-12 col-sm-6>
             <ion-card class="card-background1 specific-card">
               <ion-card-content>
                 <div>
-                  <h2 class="card-title">Nombre de souscriptions au service :</h2>
+                  <h1 class="card-title">Nombre de souscriptions au service :</h1>
                   <p class="card-number">{{this.nbSouscription}}</p>
                 </div>
               </ion-card-content>
             </ion-card>
           </ion-col>
-        </ion-row>
-        <ion-row>
-          <ion-col col-md-6>
+          <ion-col col-12 col-sm-6>
             <ion-card class="card-background2 specific-card">
               <ion-card-content>
                 <div>
-                  <h2 class="card-title">Gain total pour ce service</h2>
+                  <h1 class="card-title">Gain total pour ce service :</h1>
                   <p class="card-number">{{this.totalPaid}} €</p>
                 </div>
               </ion-card-content>
@@ -39,7 +37,7 @@
           </ion-col>
       </ion-row>
       <ion-row>
-          <ion-col col-xs-12>
+          <ion-col col-sm-8 offset-sm-2>
             <ion-card>
               <ion-card-content>
                 <canvas #paymentWayCanvas></canvas>
@@ -48,7 +46,7 @@
           </ion-col>
       </ion-row>
       <ion-row>
-          <ion-col col-xs-12 class="details-card">
+          <ion-col>
             <ion-card>
               <ion-card-content>
                 <canvas #subscriptionDetailsCanvas></canvas>
@@ -57,7 +55,7 @@
           </ion-col>
       </ion-row>
       <ion-row>
-          <ion-col col-xs-12>
+          <ion-col>
             <ion-card>
               <ion-card-content>
                 <canvas #moneyByOffersCanvas></canvas>

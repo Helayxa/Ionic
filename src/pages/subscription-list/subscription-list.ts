@@ -63,7 +63,6 @@ export class SubscriptionListPage {
           this.n_paymentWayArray[paymentWayId] += 1;
         }
       }
-      console.log(this.n_paymentWayArray);
       this.generateDetailsChart();
       this.generateMoneybyOffersChart();
       this.generatePaymentWayChart();
@@ -198,6 +197,7 @@ export class SubscriptionListPage {
         }]
       },
       options: {
+        maintainAspectRatio: false,
         title:{
           display: true,
           text: 'Repartition des moyens de paiement'

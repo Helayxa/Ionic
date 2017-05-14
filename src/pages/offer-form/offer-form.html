@@ -11,122 +11,110 @@
   <ion-grid>
       <ion-row>
           <ion-col col-12 col-md-6 offset-md-3>
-            <ion-card>
-              <ion-card-header class="header">
-                <ion-row>
-                  <ion-col>
-                    <h2>FORMULAIRE D'INSCRIPTION</h2>
-                  </ion-col>
-                </ion-row>
-              </ion-card-header>
-              <ion-card-content>
-                <form (ngSubmit)="submitForm(offerForm.value)">
-                  <div [formGroup]="offerForm" >
-                    <div *ngFor="let field of fields">
-                      <div [ngSwitch]="field?.input">
+            <form (ngSubmit)="submitForm(offerForm.value)">
+              <div [formGroup]="offerForm" >
+                <div *ngFor="let field of fields">
+                  <div [ngSwitch]="field?.input">
 
-                        <div *ngSwitchCase="'text'" [formGroupName]="field.formGroupName">
-                          <ion-item>
-                            <ion-label color="primary" stacked>{{field?.label}} <span *ngIf="field.required">*</span></ion-label>
-                            <ion-input placeholder="{{field.params?.placeholder ? field.params?.placeholder : ''}}" [formControlName]="field?.fieldId" class="inputStyle"></ion-input>
-                          </ion-item>
-                          <ion-item class="error-message-container" *ngIf="offerForm.controls[field.formGroupName]?.controls[field?.fieldId]?.errors && offerForm.controls[field.formGroupName]?.controls[field?.fieldId]?.touched">
-                            <p class="error-message">{{getErrorMessage(offerForm.controls[field.formGroupName]?.controls[field?.fieldId]?.errors)}}</p>
-                          </ion-item>
-                        </div>
-
-                        <div *ngSwitchCase="'number'" [formGroupName]="field.formGroupName">
-                          <ion-item>
-                            <ion-label color="primary" stacked>{{field?.label}} <span *ngIf="field.required">*</span></ion-label>
-                            <ion-input type="number" [formControlName]="field?.fieldId" class="inputStyle"></ion-input>
-                          </ion-item>
-                            <ion-item class="error-message-container" *ngIf="offerForm.controls[field.formGroupName]?.controls[field?.fieldId]?.errors && offerForm.controls[field.formGroupName]?.controls[field?.fieldId]?.touched">  
-                            <p class="error-message">{{getErrorMessage(offerForm.controls[field.formGroupName]?.controls[field?.fieldId]?.errors)}}</p>
-                          </ion-item>
-                        </div>
-
-                        <div *ngSwitchCase="'date'" [formGroupName]="field.formGroupName">
-                          <ion-item>
-                            <ion-label color="primary" stacked>{{field?.label}} <span *ngIf="field.required">*</span></ion-label>
-                            <ion-datetime
-                            displayFormat="DD/MM/YYYY"
-                            pickerFormat="DD/MMMM/YYYY"
-                            cancelText="Annuler"
-                            doneText="Valider"
-                            placeholder="{{field.params?.placeholder ? field.params?.placeholder : ''}}"
-                            [monthNames]="frenchMonth"
-                            [min]="field?.params?.minDate"
-                            [max]="field?.params?.maxDate"
-                            [formControlName]="field?.fieldId"
-                            class="inputStyle">
-                            </ion-datetime>
-                          </ion-item>
-                            <ion-item class="error-message-container" *ngIf="offerForm.controls[field.formGroupName]?.controls[field?.fieldId]?.errors">
-                            <p class="error-message">{{getErrorMessage(offerForm.controls[field.formGroupName]?.controls[field?.fieldId]?.errors)}}</p>
-                          </ion-item>
-                        </div>
-
-                        <div *ngSwitchCase="'radio'" [formGroupName]="field.formGroupName">
-                          <ion-list no-lines radio-group [formControlName]="field?.fieldId" class="inputStyle">
-                            <ion-list-header>
-                              <ion-label text-wrap color="primary">{{field?.label}} <span *ngIf="field.required">*</span></ion-label>
-                            </ion-list-header>
-                            <ion-item *ngFor='let choice of field?.params?.choices'>
-                              <ion-label text-wrap>{{choice?.label}}</ion-label>
-                              <ion-radio [value]="choice?.value" [checked]="choice?.selected"></ion-radio>
-                            </ion-item>
-                          </ion-list>
-                            <ion-item class="error-message-container" *ngIf="offerForm.controls[field.formGroupName]?.controls[field?.fieldId]?.errors && offerForm.controls[field.formGroupName]?.controls[field?.fieldId]?.touched">
-                            <p class="error-message">{{getErrorMessage(offerForm.controls[field.formGroupName]?.controls[field?.fieldId]?.errors)}}</p>
-                          </ion-item>
-                        </div>
-
-                        <div *ngSwitchCase="'select'" [formGroupName]="field.formGroupName">
-                          <ion-item class="inputStyle">
-                            <ion-label text-wrap color="primary">{{field?.label}} <span *ngIf="field.required">*</span></ion-label>
-                            <ion-select
-                            cancelText="Annuler"
-                            okText = "Valider"
-                            placeholder="{{field.params?.placeholder ? field.params?.placeholder : ''}}"
-                            [formControlName]="field?.fieldId">
-                              <ion-option *ngFor='let choice of field?.params?.choices' [value]="choice?.value" [selected]="choice?.selected">{{choice?.label}}</ion-option>
-                            </ion-select>
-                          </ion-item>
-                            <ion-item class="error-message-container" *ngIf="offerForm.controls[field.formGroupName]?.controls[field?.fieldId]?.errors && offerForm.controls[field.formGroupName]?.controls[field?.fieldId]?.touched">
-                            <p class="error-message">{{getErrorMessage(offerForm.controls[field.formGroupName]?.controls[field?.fieldId]?.errors)}}</p>
-                          </ion-item>
-                        </div>
-
-                        <div *ngSwitchCase="'check'" [formGroupName]="field.formGroupName">
-                          <multiple-checkbox [field]="field" [formControlName]="field?.fieldId"></multiple-checkbox>
-                            <ion-item class="error-message-container" *ngIf="offerForm.controls[field.formGroupName]?.controls[field?.fieldId]?.errors && offerForm.controls[field.formGroupName]?.controls[field?.fieldId]?.touched">
-                            <p class="error-message">{{getErrorMessage(offerForm.controls[field.formGroupName]?.controls[field?.fieldId]?.errors)}}</p>
-                          </ion-item>
-                        </div>
-
-                      </div>
+                    <div *ngSwitchCase="'text'" [formGroupName]="field.formGroupName">
+                      <ion-item>
+                        <ion-label color="primary" stacked>{{field?.label}} <span *ngIf="field.required">*</span></ion-label>
+                        <ion-input placeholder="{{field.params?.placeholder ? field.params?.placeholder : ''}}" [formControlName]="field?.fieldId" class="inputStyle"></ion-input>
+                      </ion-item>
+                      <ion-item class="error-message-container" *ngIf="offerForm.controls[field.formGroupName]?.controls[field?.fieldId]?.errors && offerForm.controls[field.formGroupName]?.controls[field?.fieldId]?.touched">
+                        <p class="error-message">{{getErrorMessage(offerForm.controls[field.formGroupName]?.controls[field?.fieldId]?.errors)}}</p>
+                      </ion-item>
                     </div>
+
+                    <div *ngSwitchCase="'number'" [formGroupName]="field.formGroupName">
+                      <ion-item>
+                        <ion-label color="primary" stacked>{{field?.label}} <span *ngIf="field.required">*</span></ion-label>
+                        <ion-input type="number" [formControlName]="field?.fieldId" class="inputStyle"></ion-input>
+                      </ion-item>
+                        <ion-item class="error-message-container" *ngIf="offerForm.controls[field.formGroupName]?.controls[field?.fieldId]?.errors && offerForm.controls[field.formGroupName]?.controls[field?.fieldId]?.touched">  
+                        <p class="error-message">{{getErrorMessage(offerForm.controls[field.formGroupName]?.controls[field?.fieldId]?.errors)}}</p>
+                      </ion-item>
+                    </div>
+
+                    <div *ngSwitchCase="'date'" [formGroupName]="field.formGroupName">
+                      <ion-item>
+                        <ion-label color="primary" stacked>{{field?.label}} <span *ngIf="field.required">*</span></ion-label>
+                        <ion-datetime
+                        displayFormat="DD/MM/YYYY"
+                        pickerFormat="DD/MMMM/YYYY"
+                        cancelText="Annuler"
+                        doneText="Valider"
+                        placeholder="{{field.params?.placeholder ? field.params?.placeholder : ''}}"
+                        [monthNames]="frenchMonth"
+                        [min]="field?.params?.minDate"
+                        [max]="field?.params?.maxDate"
+                        [formControlName]="field?.fieldId"
+                        class="inputStyle">
+                        </ion-datetime>
+                      </ion-item>
+                        <ion-item class="error-message-container" *ngIf="offerForm.controls[field.formGroupName]?.controls[field?.fieldId]?.errors">
+                        <p class="error-message">{{getErrorMessage(offerForm.controls[field.formGroupName]?.controls[field?.fieldId]?.errors)}}</p>
+                      </ion-item>
+                    </div>
+
+                    <div *ngSwitchCase="'radio'" [formGroupName]="field.formGroupName">
+                      <ion-list no-lines radio-group [formControlName]="field?.fieldId" class="inputStyle">
+                        <ion-list-header>
+                          <ion-label text-wrap color="primary">{{field?.label}} <span *ngIf="field.required">*</span></ion-label>
+                        </ion-list-header>
+                        <ion-item *ngFor='let choice of field?.params?.choices'>
+                          <ion-label text-wrap>{{choice?.label}}</ion-label>
+                          <ion-radio [value]="choice?.value" [checked]="choice?.selected"></ion-radio>
+                        </ion-item>
+                      </ion-list>
+                        <ion-item class="error-message-container" *ngIf="offerForm.controls[field.formGroupName]?.controls[field?.fieldId]?.errors && offerForm.controls[field.formGroupName]?.controls[field?.fieldId]?.touched">
+                        <p class="error-message">{{getErrorMessage(offerForm.controls[field.formGroupName]?.controls[field?.fieldId]?.errors)}}</p>
+                      </ion-item>
+                    </div>
+
+                    <div *ngSwitchCase="'select'" [formGroupName]="field.formGroupName">
+                      <ion-item class="inputStyle">
+                        <ion-label text-wrap color="primary">{{field?.label}} <span *ngIf="field.required">*</span></ion-label>
+                        <ion-select
+                        cancelText="Annuler"
+                        okText = "Valider"
+                        placeholder="{{field.params?.placeholder ? field.params?.placeholder : ''}}"
+                        [formControlName]="field?.fieldId">
+                          <ion-option *ngFor='let choice of field?.params?.choices' [value]="choice?.value" [selected]="choice?.selected">{{choice?.label}}</ion-option>
+                        </ion-select>
+                      </ion-item>
+                        <ion-item class="error-message-container" *ngIf="offerForm.controls[field.formGroupName]?.controls[field?.fieldId]?.errors && offerForm.controls[field.formGroupName]?.controls[field?.fieldId]?.touched">
+                        <p class="error-message">{{getErrorMessage(offerForm.controls[field.formGroupName]?.controls[field?.fieldId]?.errors)}}</p>
+                      </ion-item>
+                    </div>
+
+                    <div *ngSwitchCase="'check'" [formGroupName]="field.formGroupName">
+                      <multiple-checkbox [field]="field" [formControlName]="field?.fieldId"></multiple-checkbox>
+                        <ion-item class="error-message-container" *ngIf="offerForm.controls[field.formGroupName]?.controls[field?.fieldId]?.errors && offerForm.controls[field.formGroupName]?.controls[field?.fieldId]?.touched">
+                        <p class="error-message">{{getErrorMessage(offerForm.controls[field.formGroupName]?.controls[field?.fieldId]?.errors)}}</p>
+                      </ion-item>
+                    </div>
+
                   </div>
+                </div>
+              </div>
 
-                  <ion-list no-lines *ngIf="features && features.length > 0" class="inputStyle">
-                    <ion-list-header>
-                      <ion-label color="primary">Offres complémentaires</ion-label>
-                    </ion-list-header>
-                    <ion-item *ngFor="let feature of features">
-                      <ion-label text-wrap>{{feature.title}} ({{feature.description}}). Coût supplémentaire : {{feature.price}} €</ion-label>
-                      <ion-checkbox [(ngModel)]="feature.selected" (ngModelChange)="updatePrice(feature)" name="feature"></ion-checkbox>
-                    </ion-item>
-                  </ion-list>
+              <ion-list no-lines *ngIf="features && features.length > 0" class="inputStyle">
+                <ion-list-header>
+                  <ion-label color="primary">Offres complémentaires</ion-label>
+                </ion-list-header>
+                <ion-item *ngFor="let feature of features">
+                  <ion-label text-wrap>{{feature.title}} ({{feature.description}}). Coût supplémentaire : {{feature.price}} €</ion-label>
+                  <ion-checkbox [(ngModel)]="feature.selected" (ngModelChange)="updatePrice(feature)" name="feature"></ion-checkbox>
+                </ion-item>
+              </ion-list>
 
-                  <ion-row>
-                    <ion-col center text-center>
-                      <button ion-button type="submit" [disabled]="!offerForm.valid">S'inscrire pour {{price}} €</button>
-                      <!--<button ion-button type="submit">S'inscrire pour {{price}} €</button>-->
-                    </ion-col>
-                  </ion-row>
-                </form>
-              </ion-card-content>
-            </ion-card>
+              <ion-row>
+                <ion-col center text-center>
+                  <button ion-button type="submit" [disabled]="!offerForm.valid">S'inscrire pour {{price}} €</button>
+                </ion-col>
+              </ion-row>
+            </form>
           </ion-col>
       </ion-row>
   </ion-grid>
